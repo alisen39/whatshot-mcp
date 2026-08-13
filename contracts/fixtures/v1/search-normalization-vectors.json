@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "vectors": [
+    {
+      "input": "  OpenAI\t发布  GPT  ",
+      "normalized": "openai 发布 gpt"
+    },
+    {
+      "input": "ＡＩ NEWS",
+      "normalized": "ai news"
+    },
+    {
+      "input": "Straße",
+      "normalized": "strasse"
+    },
+    {
+      "input": "① 热点",
+      "normalized": "1 热点"
+    }
+  ]
+}

@@ -1,0 +1,477 @@
+{
+  "$defs": {
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "configuredSites": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Configuredsites"
+        },
+        "earliestAvailableAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Earliestavailableat"
+        },
+        "historyEnabled": {
+          "title": "Historyenabled",
+          "type": "boolean"
+        },
+        "latestAvailableAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latestavailableat"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "historyEnabled",
+        "complete"
+      ],
+      "title": "Coverage",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "boardKey": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Boardkey",
+          "type": "string"
+        },
+        "captureId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Captureid"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "evidenceId": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Evidenceid",
+          "type": "string"
+        },
+        "firstSeenAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firstseenat"
+        },
+        "hot": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hot"
+        },
+        "itemId": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Itemid",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ItemKind"
+        },
+        "lastSeenAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lastseenat"
+        },
+        "observedAt": {
+          "format": "date-time",
+          "title": "Observedat",
+          "type": "string"
+        },
+        "publishedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publishedat"
+        },
+        "rank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank"
+        },
+        "site": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "updateTime": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updatetime"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "required": [
+        "kind",
+        "site",
+        "boardKey",
+        "evidenceId",
+        "itemId",
+        "title",
+        "observedAt"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "HotEventSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "averageRank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Averagerank"
+        },
+        "durationApproximate": {
+          "title": "Durationapproximate",
+          "type": "boolean"
+        },
+        "durationHours": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Durationhours",
+          "type": "number"
+        },
+        "firstSeenApproximate": {
+          "title": "Firstseenapproximate",
+          "type": "boolean"
+        },
+        "firstSeenAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firstseenat"
+        },
+        "keyword": {
+          "title": "Keyword",
+          "type": "string"
+        },
+        "lastSeenApproximate": {
+          "title": "Lastseenapproximate",
+          "type": "boolean"
+        },
+        "lastSeenAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lastseenat"
+        },
+        "peakHot": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peakhot"
+        },
+        "peakRank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peakrank"
+        },
+        "platformCount": {
+          "minimum": 0,
+          "title": "Platformcount",
+          "type": "integer"
+        },
+        "sampleCount": {
+          "minimum": 0,
+          "title": "Samplecount",
+          "type": "integer"
+        },
+        "uniqueTopicCount": {
+          "minimum": 0,
+          "title": "Uniquetopiccount",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "keyword",
+        "firstSeenApproximate",
+        "lastSeenApproximate",
+        "durationApproximate",
+        "uniqueTopicCount",
+        "sampleCount",
+        "platformCount"
+      ],
+      "title": "HotEventSummary",
+      "type": "object"
+    },
+    "HotTimelinePoint": {
+      "additionalProperties": false,
+      "properties": {
+        "bestRank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bestrank"
+        },
+        "peakHot": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peakhot"
+        },
+        "sampleCount": {
+          "minimum": 0,
+          "title": "Samplecount",
+          "type": "integer"
+        },
+        "sites": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sites",
+          "type": "array"
+        },
+        "time": {
+          "format": "date-time",
+          "title": "Time",
+          "type": "string"
+        },
+        "uniqueTopicCount": {
+          "minimum": 0,
+          "title": "Uniquetopiccount",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "time",
+        "sampleCount",
+        "uniqueTopicCount",
+        "sites"
+      ],
+      "title": "HotTimelinePoint",
+      "type": "object"
+    },
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "analysisComplete": {
+      "title": "Analysiscomplete",
+      "type": "boolean"
+    },
+    "coverage": {
+      "$ref": "#/$defs/Coverage"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "scannedCount": {
+      "minimum": 0,
+      "title": "Scannedcount",
+      "type": "integer"
+    },
+    "summary": {
+      "$ref": "#/$defs/HotEventSummary"
+    },
+    "timeline": {
+      "items": {
+        "$ref": "#/$defs/HotTimelinePoint"
+      },
+      "title": "Timeline",
+      "type": "array"
+    }
+  },
+  "required": [
+    "summary",
+    "timeline",
+    "evidence",
+    "analysisComplete",
+    "scannedCount",
+    "coverage"
+  ],
+  "title": "HotEventAnalysisData",
+  "type": "object"
+}

@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": "UNKNOWN_SOURCE",
+    "message": "Unknown source.",
+    "retryable": false,
+    "details": {
+      "site": "missing"
+    }
+  },
+  "meta": {
+    "requestId": "fixture-error-unknown-source",
+    "contractVersion": "1",
+    "generatedAt": "2026-08-13T00:00:00Z"
+  }
+}
+

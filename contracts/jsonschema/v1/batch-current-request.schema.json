@@ -1,0 +1,70 @@
+{
+  "$defs": {
+    "BatchCurrentTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "boardKey": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Boardkey"
+        },
+        "site": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site"
+      ],
+      "title": "BatchCurrentTarget",
+      "type": "object"
+    },
+    "Freshness": {
+      "enum": [
+        "cache_only",
+        "prefer_cache",
+        "live"
+      ],
+      "title": "Freshness",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "freshness": {
+      "$ref": "#/$defs/Freshness",
+      "default": "prefer_cache"
+    },
+    "limitPerBoard": {
+      "default": 50,
+      "maximum": 200,
+      "minimum": 1,
+      "title": "Limitperboard",
+      "type": "integer"
+    },
+    "targets": {
+      "items": {
+        "$ref": "#/$defs/BatchCurrentTarget"
+      },
+      "maxItems": 100,
+      "minItems": 1,
+      "title": "Targets",
+      "type": "array"
+    }
+  },
+  "required": [
+    "targets"
+  ],
+  "title": "BatchCurrentRequest",
+  "type": "object"
+}

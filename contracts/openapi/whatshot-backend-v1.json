@@ -1,0 +1,1481 @@
+{
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "description": "Optional in the shared Contract; required for Cloud data endpoints by deployment policy.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "title": "WhatsHot Backend Contract",
+    "version": "1.0.0-rc.1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/capabilities": {
+      "get": {
+        "operationId": "getCapabilities",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/capabilities-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "security": []
+      }
+    },
+    "/category/current": {
+      "post": {
+        "operationId": "fetchCategoryCurrent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../jsonschema/v1/category-current-request.schema.json"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/category-current-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/coverage": {
+      "get": {
+        "operationId": "getDataCoverage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "site",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "boardKey",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "enum": [
+                "hotlist",
+                "newsflash",
+                "gold"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/coverage-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/current": {
+      "post": {
+        "operationId": "fetchCurrent",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../jsonschema/v1/current-request.schema.json"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/current-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/current/batch": {
+      "post": {
+        "operationId": "fetchCurrentBatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../jsonschema/v1/batch-current-request.schema.json"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/batch-current-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/history": {
+      "get": {
+        "operationId": "queryHistory",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "site",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "boardKey",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "enum": [
+                "hotlist",
+                "newsflash",
+                "gold"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "until",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/history-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/history/search": {
+      "get": {
+        "operationId": "searchHistory",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "keyword",
+            "required": true,
+            "schema": {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "site",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "boardKey",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "enum": [
+                "hotlist",
+                "newsflash",
+                "gold"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "until",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/history-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/history/trends": {
+      "get": {
+        "operationId": "getTrendSeries",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "site",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "boardKey",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "itemId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "bucket",
+            "required": false,
+            "schema": {
+              "default": "1h",
+              "enum": [
+                "10m",
+                "1h",
+                "6h",
+                "1d"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "until",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/trend-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/navigation": {
+      "get": {
+        "operationId": "listNavigation",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/navigation-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/sources": {
+      "get": {
+        "operationId": "listSources",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "enum": [
+                "hotlist",
+                "newsflash",
+                "gold"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/source-list-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    },
+    "/sources/{site}": {
+      "get": {
+        "operationId": "getSource",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "site",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/source-detail-response.schema.json"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../jsonschema/v1/error-response.schema.json"
+                }
+              }
+            },
+            "description": "Stable Backend error response"
+          }
+        },
+        "x-whatshot-required-scopes": [
+          "data:read"
+        ]
+      }
+    }
+  },
+  "security": [
+    {},
+    {
+      "bearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "x-whatshot-deployment-auth": {
+    "appliesTo": "operations with x-whatshot-required-scopes",
+    "capabilitiesPublic": true,
+    "policies": {
+      "cloud": {
+        "bearerRequired": true,
+        "description": "Cloud data endpoints require Bearer authentication and enforce each operation's declared scopes."
+      },
+      "core": {
+        "bearerRequired": false,
+        "description": "Core data endpoints are public."
+      }
+    },
+    "selection": "deployment"
+  }
+}

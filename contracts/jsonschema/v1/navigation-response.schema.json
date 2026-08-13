@@ -1,0 +1,149 @@
+{
+  "$defs": {
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    },
+    "NavigationData": {
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/NavigationEntry"
+          },
+          "title": "Entries",
+          "type": "array"
+        },
+        "nextCursor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nextcursor"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entries",
+        "truncated"
+      ],
+      "title": "NavigationData",
+      "type": "object"
+    },
+    "NavigationEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "boardCount": {
+          "minimum": 0,
+          "title": "Boardcount",
+          "type": "integer"
+        },
+        "category": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Category",
+          "type": "string"
+        },
+        "categoryTitle": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Categorytitle",
+          "type": "string"
+        },
+        "kinds": {
+          "items": {
+            "$ref": "#/$defs/ItemKind"
+          },
+          "title": "Kinds",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "site": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        },
+        "siteTitle": {
+          "maxLength": 300,
+          "minLength": 1,
+          "title": "Sitetitle",
+          "type": "string"
+        }
+      },
+      "required": [
+        "category",
+        "categoryTitle",
+        "site",
+        "siteTitle",
+        "kinds",
+        "boardCount"
+      ],
+      "title": "NavigationEntry",
+      "type": "object"
+    },
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/NavigationData"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "title": "SuccessEnvelope[NavigationData]",
+  "type": "object"
+}

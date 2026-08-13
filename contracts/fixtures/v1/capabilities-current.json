@@ -1,0 +1,35 @@
+{
+  "data": {
+    "backend": {
+      "name": "whatshot-local",
+      "version": "0.1.0"
+    },
+    "boardKeyVersion": 1,
+    "profiles": ["core-read"],
+    "features": {
+      "sources": true,
+      "sourceSchema": true,
+      "current": true,
+      "liveFetch": true,
+      "batchCurrent": true,
+      "history": false,
+      "historySearch": false,
+      "trendSeries": false,
+      "coverage": false,
+      "navigation": false,
+      "semanticSearch": false,
+      "kinds": ["hotlist", "newsflash", "gold"]
+    },
+    "limits": {
+      "maxResultItems": 200,
+      "maxBatchTargets": 12,
+      "defaultHistoryDays": 7,
+      "maxHistoryDays": 365
+    }
+  },
+  "meta": {
+    "requestId": "fixture-capabilities-current",
+    "contractVersion": "1",
+    "generatedAt": "2026-08-13T00:00:00Z"
+  }
+}

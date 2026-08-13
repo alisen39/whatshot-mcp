@@ -1,0 +1,21 @@
+{
+  "data": {
+    "entries": [
+      {
+        "category": "tech",
+        "categoryTitle": "科技",
+        "site": "github",
+        "siteTitle": "GitHub",
+        "kinds": ["hotlist"],
+        "boardCount": 1
+      }
+    ],
+    "nextCursor": null,
+    "truncated": false
+  },
+  "meta": {
+    "requestId": "fixture-navigation-page",
+    "contractVersion": "1",
+    "generatedAt": "2026-08-13T00:00:00Z"
+  }
+}

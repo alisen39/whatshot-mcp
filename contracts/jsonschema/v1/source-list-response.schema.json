@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    },
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    },
+    "SourceListData": {
+      "additionalProperties": false,
+      "properties": {
+        "nextCursor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nextcursor"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceSummary"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "sources",
+        "truncated"
+      ],
+      "title": "SourceListData",
+      "type": "object"
+    },
+    "SourceSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "boardCount": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Boardcount"
+        },
+        "capabilities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "kinds": {
+          "items": {
+            "$ref": "#/$defs/ItemKind"
+          },
+          "title": "Kinds",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "site": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "title",
+        "kinds",
+        "enabled"
+      ],
+      "title": "SourceSummary",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/SourceListData"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "title": "SuccessEnvelope[SourceListData]",
+  "type": "object"
+}

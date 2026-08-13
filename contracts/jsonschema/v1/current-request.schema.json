@@ -1,0 +1,51 @@
+{
+  "$defs": {
+    "Freshness": {
+      "enum": [
+        "cache_only",
+        "prefer_cache",
+        "live"
+      ],
+      "title": "Freshness",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "boardKey": {
+      "anyOf": [
+        {
+          "maxLength": 2048,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Boardkey"
+    },
+    "freshness": {
+      "$ref": "#/$defs/Freshness",
+      "default": "prefer_cache"
+    },
+    "limit": {
+      "default": 50,
+      "maximum": 200,
+      "minimum": 1,
+      "title": "Limit",
+      "type": "integer"
+    },
+    "site": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Site",
+      "type": "string"
+    }
+  },
+  "required": [
+    "site"
+  ],
+  "title": "CurrentRequest",
+  "type": "object"
+}

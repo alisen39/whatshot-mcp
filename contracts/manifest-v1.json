@@ -1,0 +1,30 @@
+{
+  "artifacts": {
+    "contracts/jsonschema/v1/analysis-hot-event-query.schema.json": "ea886764fbb0a6450f7caa695dbd1f694ef0b2235ceb1c410e37f4339fc3ae49",
+    "contracts/jsonschema/v1/analysis-hot-event-result.schema.json": "c47fc3814c87312bc109219e38276a0c805faa1f591b9b4cb07e96aa512b964e",
+    "contracts/jsonschema/v1/analysis-newsflash-coverage-query.schema.json": "04e826e0af60afcc02cf3f3209cc32b28e1960dc9224a7c6e8ad160ccb149b7e",
+    "contracts/jsonschema/v1/analysis-newsflash-coverage-result.schema.json": "cd5a832e490583263eb2a5328bb62bf7d694ffd39a1091d12790a189d9983bfa",
+    "contracts/jsonschema/v1/batch-current-request.schema.json": "5d96c72cc20754b7e332cc063d139b05a87a3cc5abde255044947923e9c6b91b",
+    "contracts/jsonschema/v1/batch-current-response.schema.json": "78002c2457c47200dda57f0a916492971eb83828ccade6b3a6236bde417d2d6d",
+    "contracts/jsonschema/v1/capabilities-response.schema.json": "6184458f10bb1913e7e412ea2fedd18ea871ecd9e4d394ade195c18a7f669713",
+    "contracts/jsonschema/v1/category-current-request.schema.json": "666763cd3b9e21f5bd3d9ea4f371c3146388e5e8677d7b108d0b4601b790e6d8",
+    "contracts/jsonschema/v1/category-current-response.schema.json": "250a95b5031237a0cc0db4c0b5385d3755563e14ebddf7308ad7d3f13a5d142a",
+    "contracts/jsonschema/v1/coverage-query.schema.json": "6f16415ca4d147631644584f49e349cc396e9d253788ecce4d13cf31025932a5",
+    "contracts/jsonschema/v1/coverage-response.schema.json": "6ba807cfbdfe5f2082cbf0e7ecd1a496b290cb326bc32437c949a4b961ff9490",
+    "contracts/jsonschema/v1/current-request.schema.json": "ab07e883ed6f2acad9c9849359db6dee471dde56934f985e6984075cbbed7f13",
+    "contracts/jsonschema/v1/current-response.schema.json": "bdb38e7dda34d55b9333c796106482ab4fc7e4a678151793011c605cb594f89f",
+    "contracts/jsonschema/v1/error-response.schema.json": "b14858d608440f6915eb8318b8865423a2698be6f59da98b14d0594f788f4575",
+    "contracts/jsonschema/v1/history-query.schema.json": "b04cf092233cfe1fd7b2cef665ced1eeebea2ea5683592cc3dba7830f91f9cce",
+    "contracts/jsonschema/v1/history-response.schema.json": "688b07a4d3dbc9f0b13558056f92c889c8ec6d5ea2ae267288332154447c852c",
+    "contracts/jsonschema/v1/history-search-query.schema.json": "2df932a136e49d5d05f8b29c70cf58cca1de88385d55befd8fb3f4b662734cae",
+    "contracts/jsonschema/v1/navigation-query.schema.json": "6eba5e627a3906e3d82b4b02ad1dcc6715f9e01e7aefafa6069728ba5d5b436e",
+    "contracts/jsonschema/v1/navigation-response.schema.json": "32247aa9d594867ba6dfa1bb4c30529ba7848ad874ccdd9b2f5b1a156d45bc56",
+    "contracts/jsonschema/v1/source-detail-response.schema.json": "a2ca2ade365652d16d2912e0dcfd2ebb6acf84fd92cce73d5de220ceda9b70ad",
+    "contracts/jsonschema/v1/source-list-query.schema.json": "95719aa0133b6bf7e09f27e1fcaa54316908541f7d6f909888bf20764be87aee",
+    "contracts/jsonschema/v1/source-list-response.schema.json": "a9b4500cba68c80bf826bb778fe13f1c3b75da9c19a307e9ac513e2770d873ad",
+    "contracts/jsonschema/v1/trend-query.schema.json": "5a926bfdefff2197ac042ddaa8bf54cee7b31ada75e5487e52ce98fa95719c61",
+    "contracts/jsonschema/v1/trend-response.schema.json": "174dc137a97c14e65793af83a3731699c02aaa2a7fa1d8d80b1c0c2b49b75bc7",
+    "contracts/openapi/whatshot-backend-v1.json": "ab1074eab6f3d932d32fe6ca8f7531d27692bbfcff516ed949aef562b26c9933"
+  },
+  "contractVersion": "1"
+}

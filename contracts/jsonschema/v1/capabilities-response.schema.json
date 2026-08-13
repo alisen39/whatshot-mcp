@@ -1,0 +1,233 @@
+{
+  "$defs": {
+    "BackendCapabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "backend": {
+          "$ref": "#/$defs/BackendInfo"
+        },
+        "boardKeyVersion": {
+          "const": 1,
+          "title": "Boardkeyversion",
+          "type": "integer"
+        },
+        "features": {
+          "$ref": "#/$defs/CapabilityFeatures"
+        },
+        "limits": {
+          "$ref": "#/$defs/CapabilityLimits"
+        },
+        "profiles": {
+          "items": {
+            "$ref": "#/$defs/CapabilityProfile"
+          },
+          "title": "Profiles",
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "backend",
+        "boardKeyVersion",
+        "features"
+      ],
+      "title": "BackendCapabilities",
+      "type": "object"
+    },
+    "BackendInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 80,
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "BackendInfo",
+      "type": "object"
+    },
+    "CapabilityFeatures": {
+      "additionalProperties": false,
+      "properties": {
+        "batchCurrent": {
+          "default": false,
+          "title": "Batchcurrent",
+          "type": "boolean"
+        },
+        "coverage": {
+          "default": false,
+          "title": "Coverage",
+          "type": "boolean"
+        },
+        "current": {
+          "default": false,
+          "title": "Current",
+          "type": "boolean"
+        },
+        "history": {
+          "default": false,
+          "title": "History",
+          "type": "boolean"
+        },
+        "historySearch": {
+          "default": false,
+          "title": "Historysearch",
+          "type": "boolean"
+        },
+        "kinds": {
+          "items": {
+            "$ref": "#/$defs/ItemKind"
+          },
+          "title": "Kinds",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "liveFetch": {
+          "default": false,
+          "title": "Livefetch",
+          "type": "boolean"
+        },
+        "navigation": {
+          "default": false,
+          "title": "Navigation",
+          "type": "boolean"
+        },
+        "semanticSearch": {
+          "default": false,
+          "title": "Semanticsearch",
+          "type": "boolean"
+        },
+        "sourceSchema": {
+          "default": false,
+          "title": "Sourceschema",
+          "type": "boolean"
+        },
+        "sources": {
+          "default": false,
+          "title": "Sources",
+          "type": "boolean"
+        },
+        "trendSeries": {
+          "default": false,
+          "title": "Trendseries",
+          "type": "boolean"
+        }
+      },
+      "title": "CapabilityFeatures",
+      "type": "object"
+    },
+    "CapabilityLimits": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultHistoryDays": {
+          "default": 7,
+          "maximum": 3650,
+          "minimum": 1,
+          "title": "Defaulthistorydays",
+          "type": "integer"
+        },
+        "maxBatchTargets": {
+          "default": 12,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Maxbatchtargets",
+          "type": "integer"
+        },
+        "maxHistoryDays": {
+          "default": 365,
+          "maximum": 3650,
+          "minimum": 1,
+          "title": "Maxhistorydays",
+          "type": "integer"
+        },
+        "maxResultItems": {
+          "default": 200,
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Maxresultitems",
+          "type": "integer"
+        }
+      },
+      "title": "CapabilityLimits",
+      "type": "object"
+    },
+    "CapabilityProfile": {
+      "enum": [
+        "core-read",
+        "history-read"
+      ],
+      "title": "CapabilityProfile",
+      "type": "string"
+    },
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    },
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/BackendCapabilities"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "title": "SuccessEnvelope[BackendCapabilities]",
+  "type": "object"
+}

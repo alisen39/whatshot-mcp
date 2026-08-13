@@ -1,0 +1,90 @@
+"""Canonical board identity shared by every Contract v1 implementation."""
+
+from __future__ import annotations
+
+from collections.abc import Collection, Mapping
+from urllib.parse import quote, urlencode
+
+BOARD_KEY_VERSION = 1
+DEFAULT_BOARD_KEY = "hot"
+SUPPORTED_BOARD_DIMENSIONS = frozenset(
+    {"type", "game", "range", "sort", "province", "day", "month"}
+)
+
+
+class BoardIdentityError(ValueError):
+    """A board identity contains an unsupported or ambiguous dimension."""
+
+
+def canonical_board_key(
+    *,
+    path_type: str,
+    params: Mapping[str, str],
+    declared_dimensions: Collection[str],
+) -> str:
+    """Return the canonical v1 identity for a declared source board."""
+
+    declared = tuple(declared_dimensions)
+    if any(not isinstance(key, str) or not key for key in declared):
+        raise BoardIdentityError("declared board dimensions must be non-empty strings")
+    if len(declared) != len(set(declared)):
+        raise BoardIdentityError(
+            "declared board dimensions must not contain duplicates"
+        )
+
+    unsupported_declared = set(declared) - SUPPORTED_BOARD_DIMENSIONS
+    if unsupported_declared:
+        raise BoardIdentityError(
+            f"unsupported declared board dimensions: {sorted(unsupported_declared)}"
+        )
+
+    provided_keys = set(params)
+    if any(not isinstance(key, str) or not key for key in provided_keys):
+        raise BoardIdentityError("board dimension keys must be non-empty strings")
+    if "type" in provided_keys:
+        raise BoardIdentityError("type must be supplied only as path_type")
+
+    unsupported_provided = provided_keys - SUPPORTED_BOARD_DIMENSIONS
+    if unsupported_provided:
+        raise BoardIdentityError(
+            f"unsupported board dimensions: {sorted(unsupported_provided)}"
+        )
+
+    undeclared = provided_keys - set(declared)
+    if undeclared:
+        raise BoardIdentityError(
+            f"board dimensions not declared by source: {sorted(undeclared)}"
+        )
+
+    dimensions: list[tuple[str, str]] = []
+    if "type" in declared:
+        if not isinstance(path_type, str) or not path_type:
+            raise BoardIdentityError("path_type must be a non-empty string")
+        dimensions.append(("type", path_type))
+
+    for key in sorted(provided_keys):
+        value = params[key]
+        if not isinstance(value, str) or not value:
+            raise BoardIdentityError(
+                f"board dimension '{key}' must have a non-empty string value"
+            )
+        dimensions.append((key, value))
+
+    if not dimensions:
+        return DEFAULT_BOARD_KEY
+    return urlencode(
+        dimensions,
+        doseq=False,
+        safe="",
+        encoding="utf-8",
+        errors="strict",
+        quote_via=quote,
+    )
+
+
+def board_key_read_candidates(board_key: str) -> tuple[str, ...]:
+    """Return exact keys to try during the legacy ``default`` read window."""
+
+    if board_key in {DEFAULT_BOARD_KEY, "default"}:
+        return (DEFAULT_BOARD_KEY, "default")
+    return (board_key,)

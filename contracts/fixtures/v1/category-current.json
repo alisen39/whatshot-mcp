@@ -1,0 +1,33 @@
+{
+  "data": {
+    "category": "tech",
+    "results": [
+      {
+        "site": "github",
+        "boardKey": "default",
+        "kind": "hotlist",
+        "title": "GitHub Trending",
+        "type": "Trending",
+        "updateTime": "2026-08-13T00:00:00Z",
+        "observedAt": "2026-08-13T00:00:01Z",
+        "sourceMode": "database",
+        "items": [
+          {
+            "itemId": "openai/example",
+            "rank": 1,
+            "title": "openai/example",
+            "url": "https://github.com/openai/example",
+            "extra": {}
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "truncated": false
+  },
+  "meta": {
+    "requestId": "fixture-category-current",
+    "contractVersion": "1",
+    "generatedAt": "2026-08-13T00:00:01Z"
+  }
+}

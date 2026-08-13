@@ -1,0 +1,258 @@
+{
+  "$defs": {
+    "Coverage": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "configuredSites": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Configuredsites"
+        },
+        "earliestAvailableAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Earliestavailableat"
+        },
+        "historyEnabled": {
+          "title": "Historyenabled",
+          "type": "boolean"
+        },
+        "latestAvailableAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latestavailableat"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "historyEnabled",
+        "complete"
+      ],
+      "title": "Coverage",
+      "type": "object"
+    },
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    },
+    "TrendData": {
+      "additionalProperties": false,
+      "properties": {
+        "boardKey": {
+          "title": "Boardkey",
+          "type": "string"
+        },
+        "bucket": {
+          "enum": [
+            "10m",
+            "1h",
+            "6h",
+            "1d"
+          ],
+          "title": "Bucket",
+          "type": "string"
+        },
+        "coverage": {
+          "$ref": "#/$defs/Coverage"
+        },
+        "itemId": {
+          "title": "Itemid",
+          "type": "string"
+        },
+        "series": {
+          "items": {
+            "$ref": "#/$defs/TrendPoint"
+          },
+          "title": "Series",
+          "type": "array"
+        },
+        "site": {
+          "title": "Site",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "boardKey",
+        "itemId",
+        "bucket",
+        "series",
+        "coverage"
+      ],
+      "title": "TrendData",
+      "type": "object"
+    },
+    "TrendPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "averageRank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Averagerank"
+        },
+        "bestRank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bestrank"
+        },
+        "bucketStart": {
+          "format": "date-time",
+          "title": "Bucketstart",
+          "type": "string"
+        },
+        "maxHot": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Maxhot"
+        },
+        "minHot": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Minhot"
+        },
+        "samples": {
+          "minimum": 0,
+          "title": "Samples",
+          "type": "integer"
+        },
+        "worstRank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Worstrank"
+        }
+      },
+      "required": [
+        "bucketStart",
+        "samples"
+      ],
+      "title": "TrendPoint",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/TrendData"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "title": "SuccessEnvelope[TrendData]",
+  "type": "object"
+}

@@ -1,0 +1,252 @@
+{
+  "$defs": {
+    "BoardDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "boardKey": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Boardkey",
+          "type": "string"
+        },
+        "isDefault": {
+          "title": "Isdefault",
+          "type": "boolean"
+        },
+        "kind": {
+          "$ref": "#/$defs/ItemKind"
+        },
+        "liveFetchSupported": {
+          "title": "Livefetchsupported",
+          "type": "boolean"
+        },
+        "params": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Params",
+          "type": "object"
+        },
+        "pathType": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Pathtype",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "boardKey",
+        "title",
+        "kind",
+        "pathType",
+        "isDefault",
+        "liveFetchSupported"
+      ],
+      "title": "BoardDescriptor",
+      "type": "object"
+    },
+    "DimensionLocation": {
+      "enum": [
+        "path",
+        "query"
+      ],
+      "title": "DimensionLocation",
+      "type": "string"
+    },
+    "DimensionOption": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "label"
+      ],
+      "title": "DimensionOption",
+      "type": "object"
+    },
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    },
+    "JsonValue": {},
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    },
+    "SourceDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "boards": {
+          "items": {
+            "$ref": "#/$defs/BoardDescriptor"
+          },
+          "title": "Boards",
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "dimensions": {
+          "items": {
+            "$ref": "#/$defs/SourceDimension"
+          },
+          "title": "Dimensions",
+          "type": "array"
+        },
+        "kinds": {
+          "items": {
+            "$ref": "#/$defs/ItemKind"
+          },
+          "title": "Kinds",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "site": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        },
+        "title": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "title",
+        "kinds",
+        "dimensions",
+        "boards"
+      ],
+      "title": "SourceDetail",
+      "type": "object"
+    },
+    "SourceDimension": {
+      "additionalProperties": false,
+      "description": "One board identity dimension declared by a source.\n\n``dynamic`` means the Backend cannot publish a finite option set.  The\nsource's explicitly enumerated ``boards`` still lists finite/default\nboards, while callers can use this descriptor to understand dynamic\ndimensions such as province, day, and month.",
+      "properties": {
+        "dynamic": {
+          "title": "Dynamic",
+          "type": "boolean"
+        },
+        "key": {
+          "maxLength": 80,
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "location": {
+          "$ref": "#/$defs/DimensionLocation"
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/DimensionOption"
+          },
+          "title": "Options",
+          "type": "array"
+        }
+      },
+      "required": [
+        "key",
+        "location",
+        "dynamic"
+      ],
+      "title": "SourceDimension",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/SourceDetail"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "title": "SuccessEnvelope[SourceDetail]",
+  "type": "object"
+}

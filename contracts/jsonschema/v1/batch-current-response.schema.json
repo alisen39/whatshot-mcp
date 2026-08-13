@@ -1,0 +1,343 @@
+{
+  "$defs": {
+    "BackendErrorCode": {
+      "enum": [
+        "INVALID_ARGUMENT",
+        "INVALID_CURSOR",
+        "CURSOR_EXPIRED",
+        "UNKNOWN_SOURCE",
+        "UNKNOWN_BOARD",
+        "CAPABILITY_UNAVAILABLE",
+        "HISTORY_DISABLED",
+        "UNAUTHORIZED",
+        "FORBIDDEN",
+        "INSUFFICIENT_SCOPE",
+        "RATE_LIMITED",
+        "UPSTREAM_UNAVAILABLE",
+        "INTERNAL_ERROR"
+      ],
+      "title": "BackendErrorCode",
+      "type": "string"
+    },
+    "BatchCurrentData": {
+      "additionalProperties": false,
+      "properties": {
+        "errors": {
+          "items": {
+            "$ref": "#/$defs/TargetError"
+          },
+          "title": "Errors",
+          "type": "array"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/CurrentData"
+          },
+          "title": "Results",
+          "type": "array"
+        },
+        "truncated": {
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "results",
+        "errors",
+        "truncated"
+      ],
+      "title": "BatchCurrentData",
+      "type": "object"
+    },
+    "CurrentData": {
+      "additionalProperties": false,
+      "properties": {
+        "boardKey": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Boardkey",
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/CurrentItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "kind": {
+          "$ref": "#/$defs/ItemKind"
+        },
+        "observedAt": {
+          "format": "date-time",
+          "title": "Observedat",
+          "type": "string"
+        },
+        "site": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Site",
+          "type": "string"
+        },
+        "sourceMode": {
+          "$ref": "#/$defs/SourceMode"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Type"
+        },
+        "updateTime": {
+          "format": "date-time",
+          "title": "Updatetime",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "boardKey",
+        "kind",
+        "title",
+        "updateTime",
+        "observedAt",
+        "sourceMode",
+        "items"
+      ],
+      "title": "CurrentData",
+      "type": "object"
+    },
+    "CurrentItem": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "extra": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "title": "Extra",
+          "type": "object"
+        },
+        "hot": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hot"
+        },
+        "itemId": {
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Itemid",
+          "type": "string"
+        },
+        "mobileUrl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mobileurl"
+        },
+        "publishedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publishedat"
+        },
+        "rank": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rank"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "required": [
+        "itemId",
+        "title"
+      ],
+      "title": "CurrentItem",
+      "type": "object"
+    },
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    },
+    "JsonValue": {},
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    },
+    "SourceMode": {
+      "enum": [
+        "memory_cache",
+        "redis_cache",
+        "database",
+        "live"
+      ],
+      "title": "SourceMode",
+      "type": "string"
+    },
+    "TargetError": {
+      "additionalProperties": false,
+      "properties": {
+        "boardKey": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Boardkey"
+        },
+        "code": {
+          "$ref": "#/$defs/BackendErrorCode"
+        },
+        "message": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "default": false,
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "site": {
+          "title": "Site",
+          "type": "string"
+        }
+      },
+      "required": [
+        "site",
+        "code",
+        "message"
+      ],
+      "title": "TargetError",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "$ref": "#/$defs/BatchCurrentData"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "title": "SuccessEnvelope[BatchCurrentData]",
+  "type": "object"
+}

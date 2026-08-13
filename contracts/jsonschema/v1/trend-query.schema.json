@@ -1,0 +1,67 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "boardKey": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "title": "Boardkey",
+      "type": "string"
+    },
+    "bucket": {
+      "default": "1h",
+      "enum": [
+        "10m",
+        "1h",
+        "6h",
+        "1d"
+      ],
+      "title": "Bucket",
+      "type": "string"
+    },
+    "itemId": {
+      "maxLength": 2048,
+      "minLength": 1,
+      "title": "Itemid",
+      "type": "string"
+    },
+    "since": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Since"
+    },
+    "site": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Site",
+      "type": "string"
+    },
+    "until": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Until"
+    }
+  },
+  "required": [
+    "site",
+    "boardKey",
+    "itemId"
+  ],
+  "title": "TrendQuery",
+  "type": "object"
+}

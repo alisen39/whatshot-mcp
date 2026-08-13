@@ -1,0 +1,53 @@
+{
+  "$defs": {
+    "ItemKind": {
+      "enum": [
+        "hotlist",
+        "newsflash",
+        "gold"
+      ],
+      "title": "ItemKind",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "boardKey": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Boardkey"
+    },
+    "kind": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ItemKind"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "site": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Site"
+    }
+  },
+  "title": "CoverageQuery",
+  "type": "object"
+}

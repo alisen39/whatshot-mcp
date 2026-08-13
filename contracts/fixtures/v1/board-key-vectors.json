@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "vectors": [
+    {
+      "pathType": "hot",
+      "params": {},
+      "declaredDimensions": [],
+      "boardKey": "hot"
+    },
+    {
+      "pathType": "ranking",
+      "params": {
+        "range": "week",
+        "game": "genshin"
+      },
+      "declaredDimensions": ["range", "type", "game"],
+      "boardKey": "type=ranking&game=genshin&range=week"
+    },
+    {
+      "pathType": "weather",
+      "params": {
+        "province": "北京市 海淀/区",
+        "month": "2026-08",
+        "day": "2026-08-13"
+      },
+      "declaredDimensions": ["type", "province", "month", "day"],
+      "boardKey": "type=weather&day=2026-08-13&month=2026-08&province=%E5%8C%97%E4%BA%AC%E5%B8%82%20%E6%B5%B7%E6%B7%80%2F%E5%8C%BA"
+    }
+  ]
+}

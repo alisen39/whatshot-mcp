@@ -1,0 +1,114 @@
+{
+  "$defs": {
+    "BackendErrorCode": {
+      "enum": [
+        "INVALID_ARGUMENT",
+        "INVALID_CURSOR",
+        "CURSOR_EXPIRED",
+        "UNKNOWN_SOURCE",
+        "UNKNOWN_BOARD",
+        "CAPABILITY_UNAVAILABLE",
+        "HISTORY_DISABLED",
+        "UNAUTHORIZED",
+        "FORBIDDEN",
+        "INSUFFICIENT_SCOPE",
+        "RATE_LIMITED",
+        "UPSTREAM_UNAVAILABLE",
+        "INTERNAL_ERROR"
+      ],
+      "title": "BackendErrorCode",
+      "type": "string"
+    },
+    "ErrorDetail": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/BackendErrorCode"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Details"
+        },
+        "message": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "retryable": {
+          "default": false,
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "ErrorDetail",
+      "type": "object"
+    },
+    "JsonValue": {},
+    "ResponseMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "contractVersion": {
+          "const": "1",
+          "default": "1",
+          "title": "Contractversion",
+          "type": "string"
+        },
+        "generatedAt": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generatedat"
+        },
+        "requestId": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Requestid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId"
+      ],
+      "title": "ResponseMeta",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "$ref": "#/$defs/ErrorDetail"
+    },
+    "meta": {
+      "$ref": "#/$defs/ResponseMeta"
+    }
+  },
+  "required": [
+    "error",
+    "meta"
+  ],
+  "title": "ErrorEnvelope",
+  "type": "object"
+}

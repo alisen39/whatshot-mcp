@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "boardKey": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Boardkey"
+    },
+    "evidenceLimit": {
+      "default": 40,
+      "maximum": 200,
+      "minimum": 0,
+      "title": "Evidencelimit",
+      "type": "integer"
+    },
+    "keyword": {
+      "maxLength": 500,
+      "minLength": 1,
+      "title": "Keyword",
+      "type": "string"
+    },
+    "scanBudget": {
+      "default": 1000,
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Scanbudget",
+      "type": "integer"
+    },
+    "since": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Since"
+    },
+    "site": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Site"
+    },
+    "until": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Until"
+    }
+  },
+  "required": [
+    "keyword"
+  ],
+  "title": "NewsflashCoverageAnalysisQuery",
+  "type": "object"
+}
