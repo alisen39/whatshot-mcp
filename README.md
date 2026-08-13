@@ -164,5 +164,4 @@ fails closed.
 
 ## License
 
-No license has been selected for this new repository yet. A license file will
-be added only after that decision is confirmed.
+MIT License. See `LICENSE`.
