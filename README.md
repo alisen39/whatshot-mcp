@@ -156,3 +156,11 @@ fails closed.
 ## License
 
 MIT License. See `LICENSE`.
+
+## Release
+
+PyPI publishing uses GitHub Actions Trusted Publishing; the repository does not
+store a long-lived PyPI token. After validation and a SemVer version update,
+push the matching `v<version>` tag. The dedicated `publish.yml` workflow builds
+the wheel and source distribution, then publishes them from the protected
+`pypi` environment.
