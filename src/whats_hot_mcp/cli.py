@@ -7,7 +7,6 @@ import asyncio
 import sys
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Literal
 
 import uvicorn
 
@@ -22,8 +21,6 @@ from whats_hot_mcp.errors import (
 )
 from whats_hot_mcp.server import build_mcp_server, build_streamable_http_app
 
-Transport = Literal["streamable-http", "stdio"]
-
 EXIT_OK = 0
 EXIT_CONFIG_ERROR = 2
 EXIT_BACKEND_UNAVAILABLE = 3
@@ -37,21 +34,13 @@ def _add_config(parser: argparse.ArgumentParser) -> None:
 
 def _add_serve_options(parser: argparse.ArgumentParser) -> None:
     _add_config(parser)
-    parser.add_argument(
-        "--transport",
-        choices=("streamable-http", "stdio"),
-        default="streamable-http",
-        help="MCP transport (default: streamable-http)",
-    )
     parser.add_argument("--host", help="override server.bind")
     parser.add_argument("--port", type=int, help="override server.port")
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="whats-hot-mcp")
-    # Legacy direct-start flags remain at the root.
-    _add_serve_options(parser)
-    commands = parser.add_subparsers(dest="command")
+    commands = parser.add_subparsers(dest="command", required=True)
 
     serve = commands.add_parser("serve", help="start the MCP server")
     _add_serve_options(serve)
@@ -81,9 +70,8 @@ def _apply_serve_overrides(settings: Settings, args: argparse.Namespace) -> None
         settings.server.port = args.port
 
 
-def run(settings: Settings, transport: Transport) -> None:
-    if transport == "streamable-http" or settings.server.auth.mode != "none":
-        settings.assert_streamable_http_safe()
+def run(settings: Settings) -> None:
+    settings.assert_streamable_http_safe()
     capabilities = asyncio.run(_load_startup_capabilities(settings))
     backend = BackendClient(
         settings.backend.url,
@@ -93,8 +81,7 @@ def run(settings: Settings, transport: Transport) -> None:
     )
     inbound_token = (
         settings.server.auth.token
-        if transport == "streamable-http"
-        and settings.server.auth.mode == "static_token"
+        if settings.server.auth.mode == "static_token"
         else None
     )
     server = build_mcp_server(
@@ -102,9 +89,6 @@ def run(settings: Settings, transport: Transport) -> None:
         capabilities,
         close_backend_on_shutdown=True,
     )
-    if transport == "stdio":
-        server.run("stdio")
-        return
     app = build_streamable_http_app(
         server,
         path=settings.server.path,
@@ -195,7 +179,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     _apply_serve_overrides(settings, args)
     try:
-        run(settings, args.transport)
+        run(settings)
     except ValueError:
         return _configuration_error()
     except BackendTransportError as exc:

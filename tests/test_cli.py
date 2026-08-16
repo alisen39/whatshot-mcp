@@ -13,23 +13,15 @@ def test_version_command(capsys: Any) -> None:
     assert capsys.readouterr().out.strip() == f"whats-hot-mcp {__version__}"
 
 
-def test_serve_subcommand_and_legacy_form_are_compatible(
-    monkeypatch: Any,
-) -> None:
-    calls: list[tuple[str, int, str]] = []
+def test_serve_subcommand_applies_http_overrides(monkeypatch: Any) -> None:
+    calls: list[tuple[str, int]] = []
 
-    def fake_run(settings: Settings, transport: str) -> None:
-        calls.append((settings.server.bind, settings.server.port, transport))
+    def fake_run(settings: Settings) -> None:
+        calls.append((settings.server.bind, settings.server.port))
 
     monkeypatch.setattr(cli, "run", fake_run)
     assert cli.main(["serve", "--host", "127.0.0.1", "--port", "7001"]) == 0
-    assert cli.main(["--host", "127.0.0.1", "--port", "7002"]) == 0
-    assert cli.main(["serve", "--transport", "stdio"]) == 0
-    assert calls == [
-        ("127.0.0.1", 7001, "streamable-http"),
-        ("127.0.0.1", 7002, "streamable-http"),
-        ("127.0.0.1", 6691, "stdio"),
-    ]
+    assert calls == [("127.0.0.1", 7001)]
 
 
 def test_config_validate_and_secret_safe_error(monkeypatch: Any, capsys: Any) -> None:

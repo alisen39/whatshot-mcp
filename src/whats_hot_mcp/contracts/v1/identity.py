@@ -80,11 +80,3 @@ def canonical_board_key(
         errors="strict",
         quote_via=quote,
     )
-
-
-def board_key_read_candidates(board_key: str) -> tuple[str, ...]:
-    """Return exact keys to try during the legacy ``default`` read window."""
-
-    if board_key in {DEFAULT_BOARD_KEY, "default"}:
-        return (DEFAULT_BOARD_KEY, "default")
-    return (board_key,)

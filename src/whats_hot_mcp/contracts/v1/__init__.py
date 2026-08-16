@@ -56,7 +56,6 @@ from whats_hot_mcp.contracts.v1.identity import (
     DEFAULT_BOARD_KEY,
     SUPPORTED_BOARD_DIMENSIONS,
     BoardIdentityError,
-    board_key_read_candidates,
     canonical_board_key,
 )
 from whats_hot_mcp.contracts.v1.navigation import (
@@ -137,7 +136,6 @@ __all__ = [
     "TrendData",
     "TrendPoint",
     "TrendQuery",
-    "board_key_read_candidates",
     "canonical_board_key",
     "normalize_search_text",
 ]

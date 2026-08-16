@@ -1,15 +1,14 @@
 # WhatsHot MCP
 
-`whats-hot-mcp` is the planned single open-source MCP server for WhatsHot. It
-will connect to either a local WhatsHot Backend or the hosted WhatsHot Backend
-through the same versioned HTTP contract.
+`whats-hot-mcp` is the single open-source MCP server for WhatsHot. It connects
+to either a local WhatsHot Backend or the hosted WhatsHot Backend through the
+same versioned HTTP contract.
 
-This repository contains the Contract v1 models and the first `core-read` MCP
-implementation. The MCP server only talks to a versioned WhatsHot Backend over
+This repository contains the Contract v1 models and the MCP implementation.
+The MCP server only talks to a versioned WhatsHot Backend over
 HTTP; it never opens DuckDB or PostgreSQL itself.
 
-The project is licensed under the MIT License. The planned GitHub owner is
-`alisen39`; the repository and PyPI distribution have not been published yet.
+The project is licensed under the MIT License and owned by `alisen39`.
 
 ## Requirements
 
@@ -17,9 +16,8 @@ The project is licensed under the MIT License. The planned GitHub owner is
 - One standard installation; no optional dependency extras are currently
   defined
 
-Once a release is published, the only supported installation form will be
-`python -m pip install whats-hot-mcp`. No `[all]` or other extras are currently
-defined.
+The supported installation form is `python -m pip install whats-hot-mcp`. No
+`[all]` or other extras are defined.
 
 For local development:
 
@@ -37,14 +35,8 @@ Copy `config.example.toml`, then start the primary Streamable HTTP transport:
 whats-hot-mcp serve --config ./config.toml
 ```
 
-The original `whats-hot-mcp --config ./config.toml` form remains compatible.
-
-Clients connect to `http://127.0.0.1:6691/mcp` by default. A compatibility stdio
-transport uses the same fixed Tool Catalog:
-
-```bash
-whats-hot-mcp --config ./config.toml --transport stdio
-```
+Clients connect to `http://127.0.0.1:6691/mcp` by default. Streamable HTTP is
+the only supported transport.
 
 The HTTP process also exposes a minimal public `GET /health` probe and a
 deployment-level `GET /ready` probe. When static inbound authentication is
@@ -71,8 +63,7 @@ request header and is never a tool argument.
 There are two independent authentication boundaries:
 
 - MCP client → MCP Server: Streamable HTTP may use the configured inbound
-  static Bearer token. The stdio compatibility transport has no HTTP boundary
-  and is unchanged.
+  static Bearer token.
 - MCP Server → Backend `/api/v1`: Core data endpoints are public, while Cloud
   data endpoints require the configured Backend Bearer token and enforce their
   declared scopes. The shared OpenAPI contract marks Bearer as optional and

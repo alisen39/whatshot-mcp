@@ -6,7 +6,6 @@ from whats_hot_mcp.contracts.v1 import (
     BOARD_KEY_VERSION,
     SUPPORTED_BOARD_DIMENSIONS,
     BoardIdentityError,
-    board_key_read_candidates,
     canonical_board_key,
 )
 
@@ -82,9 +81,3 @@ def test_contract_dimensions_are_frozen() -> None:
         "day",
         "month",
     }
-
-
-def test_legacy_default_is_a_read_only_alias() -> None:
-    assert board_key_read_candidates("hot") == ("hot", "default")
-    assert board_key_read_candidates("default") == ("hot", "default")
-    assert board_key_read_candidates("type=weekly") == ("type=weekly",)
