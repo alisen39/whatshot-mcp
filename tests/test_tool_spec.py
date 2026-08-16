@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from whats_hot_mcp.contracts.v1 import CurrentData, CurrentRequest
-from whats_hot_mcp.tools import ToolAvailability, ToolSpec
+from whatshot_mcp.contracts.v1 import CurrentData, CurrentRequest
+from whatshot_mcp.tools import ToolAvailability, ToolSpec
 
 
 def test_tool_spec_has_only_stable_availability_values() -> None:

@@ -1,6 +1,6 @@
 # WhatsHot MCP
 
-`whats-hot-mcp` is the single open-source MCP server for WhatsHot. It connects
+`whatshot-mcp` is the single open-source MCP server for WhatsHot. It connects
 to either a local WhatsHot Backend or the hosted WhatsHot Backend through the
 same versioned HTTP contract.
 
@@ -16,7 +16,7 @@ The project is licensed under the MIT License and owned by `alisen39`.
 - One standard installation; no optional dependency extras are currently
   defined
 
-The supported installation form is `python -m pip install whats-hot-mcp`. No
+The supported installation form is `python -m pip install whatshot-mcp`. No
 `[all]` or other extras are defined.
 
 For local development:
@@ -32,7 +32,7 @@ python -m build
 Copy `config.example.toml`, then start the primary Streamable HTTP transport:
 
 ```bash
-whats-hot-mcp serve --config ./config.toml
+whatshot-mcp serve --config ./config.toml
 ```
 
 Clients connect to `http://127.0.0.1:6691/mcp` by default. Streamable HTTP is
@@ -45,9 +45,9 @@ enabled, `/ready` requires the same Bearer token while `/health` remains public.
 Operational commands:
 
 ```bash
-whats-hot-mcp config validate --config ./config.toml
-whats-hot-mcp backend check --config ./config.toml
-whats-hot-mcp version
+whatshot-mcp config validate --config ./config.toml
+whatshot-mcp backend check --config ./config.toml
+whatshot-mcp version
 ```
 
 `backend check` validates the capabilities envelope, Contract v1 and
@@ -74,16 +74,16 @@ key is never exposed as a tool argument.
 Supported environment overrides include:
 
 ```text
-WHATS_HOT_MCP_SERVER_BIND
-WHATS_HOT_MCP_SERVER_PORT
-WHATS_HOT_MCP_SERVER_PATH
-WHATS_HOT_MCP_SERVER_AUTH_MODE
-WHATS_HOT_MCP_SERVER_TOKEN_ENV
-WHATS_HOT_MCP_SERVER_TOKEN
-WHATS_HOT_MCP_BACKEND_URL
-WHATS_HOT_MCP_BACKEND_API_KEY
-WHATS_HOT_MCP_BACKEND_TIMEOUT_SECONDS
-WHATS_HOT_MCP_BACKEND_CAPABILITIES_TTL_SECONDS
+WHATSHOT_MCP_SERVER_BIND
+WHATSHOT_MCP_SERVER_PORT
+WHATSHOT_MCP_SERVER_PATH
+WHATSHOT_MCP_SERVER_AUTH_MODE
+WHATSHOT_MCP_SERVER_TOKEN_ENV
+WHATSHOT_MCP_SERVER_TOKEN
+WHATSHOT_MCP_BACKEND_URL
+WHATSHOT_MCP_BACKEND_API_KEY
+WHATSHOT_MCP_BACKEND_TIMEOUT_SECONDS
+WHATSHOT_MCP_BACKEND_CAPABILITIES_TTL_SECONDS
 ```
 
 The first fixed Universal Tool Catalog contains:
@@ -127,7 +127,7 @@ user of one deployment sees the same publicly cacheable catalog.
 ## Contract v1
 
 The source of truth is the Pydantic model package at
-`src/whats_hot_mcp/contracts/v1/`.
+`src/whatshot_mcp/contracts/v1/`.
 
 - All public JSON fields serialize as `camelCase`.
 - All models reject undeclared fields.

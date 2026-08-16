@@ -1,6 +1,6 @@
 """Public exports for WhatsHot Backend Contract v1."""
 
-from whats_hot_mcp.contracts.v1.analysis import (
+from whatshot_mcp.contracts.v1.analysis import (
     AnalysisQuery,
     HotEventAnalysisData,
     HotEventAnalysisQuery,
@@ -12,14 +12,14 @@ from whats_hot_mcp.contracts.v1.analysis import (
     NewsflashCoverageSummary,
     NewsflashEvent,
 )
-from whats_hot_mcp.contracts.v1.capabilities import (
+from whatshot_mcp.contracts.v1.capabilities import (
     BackendCapabilities,
     BackendInfo,
     CapabilityFeatures,
     CapabilityLimits,
     CapabilityProfile,
 )
-from whats_hot_mcp.contracts.v1.common import (
+from whatshot_mcp.contracts.v1.common import (
     CONTRACT_MAJOR,
     BackendErrorCode,
     ContractModel,
@@ -31,7 +31,7 @@ from whats_hot_mcp.contracts.v1.common import (
     SourceMode,
     SuccessEnvelope,
 )
-from whats_hot_mcp.contracts.v1.current import (
+from whatshot_mcp.contracts.v1.current import (
     BatchCurrentData,
     BatchCurrentRequest,
     BatchCurrentTarget,
@@ -41,7 +41,7 @@ from whats_hot_mcp.contracts.v1.current import (
     Freshness,
     TargetError,
 )
-from whats_hot_mcp.contracts.v1.history import (
+from whatshot_mcp.contracts.v1.history import (
     CoverageQuery,
     Evidence,
     HistoryPageData,
@@ -51,21 +51,21 @@ from whats_hot_mcp.contracts.v1.history import (
     TrendPoint,
     TrendQuery,
 )
-from whats_hot_mcp.contracts.v1.identity import (
+from whatshot_mcp.contracts.v1.identity import (
     BOARD_KEY_VERSION,
     DEFAULT_BOARD_KEY,
     SUPPORTED_BOARD_DIMENSIONS,
     BoardIdentityError,
     canonical_board_key,
 )
-from whats_hot_mcp.contracts.v1.navigation import (
+from whatshot_mcp.contracts.v1.navigation import (
     CategoryCurrentData,
     CategoryCurrentRequest,
     NavigationData,
     NavigationEntry,
     NavigationQuery,
 )
-from whats_hot_mcp.contracts.v1.source import (
+from whatshot_mcp.contracts.v1.source import (
     BoardDescriptor,
     DimensionLocation,
     DimensionOption,
@@ -75,7 +75,7 @@ from whats_hot_mcp.contracts.v1.source import (
     SourceListQuery,
     SourceSummary,
 )
-from whats_hot_mcp.contracts.v1.text import normalize_search_text
+from whatshot_mcp.contracts.v1.text import normalize_search_text
 
 __all__ = [
     "AnalysisQuery",

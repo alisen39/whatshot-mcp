@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import asyncio
 
-from whats_hot_mcp.contracts.runner import probe_backend
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.runner import probe_backend
+from whatshot_mcp.contracts.v1 import (
     BackendCapabilities,
     CategoryCurrentData,
     CurrentData,

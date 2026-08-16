@@ -10,8 +10,8 @@ from urllib.parse import quote
 import httpx
 from pydantic import BaseModel, SecretStr, ValidationError
 
-from whats_hot_mcp import __version__
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp import __version__
+from whatshot_mcp.contracts.v1 import (
     BOARD_KEY_VERSION,
     BackendCapabilities,
     BatchCurrentData,
@@ -35,7 +35,7 @@ from whats_hot_mcp.contracts.v1 import (
     TrendData,
     TrendQuery,
 )
-from whats_hot_mcp.errors import (
+from whatshot_mcp.errors import (
     BackendAPIError,
     BackendBoardKeyVersionError,
     BackendProtocolError,
@@ -245,7 +245,7 @@ class BackendClient:
     ) -> ModelT:
         headers = {
             "Accept": "application/json",
-            "User-Agent": f"whats-hot-mcp/{__version__}",
+            "User-Agent": f"whatshot-mcp/{__version__}",
             "X-Whatshot-Tool-Name": tool_name,
         }
         if self._api_key:

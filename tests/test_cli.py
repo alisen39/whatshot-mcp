@@ -2,15 +2,15 @@ from __future__ import annotations
 
 from typing import Any
 
-from whats_hot_mcp import __version__, cli
-from whats_hot_mcp.config import Settings
-from whats_hot_mcp.contracts.v1 import BackendCapabilities
-from whats_hot_mcp.errors import BackendBoardKeyVersionError, BackendTransportError
+from whatshot_mcp import __version__, cli
+from whatshot_mcp.config import Settings
+from whatshot_mcp.contracts.v1 import BackendCapabilities
+from whatshot_mcp.errors import BackendBoardKeyVersionError, BackendTransportError
 
 
 def test_version_command(capsys: Any) -> None:
     assert cli.main(["version"]) == cli.EXIT_OK
-    assert capsys.readouterr().out.strip() == f"whats-hot-mcp {__version__}"
+    assert capsys.readouterr().out.strip() == f"whatshot-mcp {__version__}"
 
 
 def test_serve_subcommand_applies_http_overrides(monkeypatch: Any) -> None:

@@ -7,7 +7,7 @@ from typing import Annotated
 
 from pydantic import AwareDatetime, Field, JsonValue
 
-from whats_hot_mcp.contracts.v1.common import (
+from whatshot_mcp.contracts.v1.common import (
     BackendErrorCode,
     ContractModel,
     ItemKind,

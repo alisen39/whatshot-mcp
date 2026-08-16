@@ -7,7 +7,7 @@ from typing import Annotated
 
 from pydantic import Field, JsonValue, field_serializer
 
-from whats_hot_mcp.contracts.v1.common import ContractModel, ItemKind
+from whatshot_mcp.contracts.v1.common import ContractModel, ItemKind
 
 
 class SourceListQuery(ContractModel):

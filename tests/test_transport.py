@@ -11,7 +11,7 @@ from mcp_types import (
     PROTOCOL_VERSION_META_KEY,
 )
 
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.v1 import (
     BackendCapabilities,
     CategoryCurrentData,
     CurrentData,
@@ -19,8 +19,8 @@ from whats_hot_mcp.contracts.v1 import (
     NavigationData,
     SourceMode,
 )
-from whats_hot_mcp.errors import UnsupportedCapability
-from whats_hot_mcp.server import build_mcp_server, build_streamable_http_app
+from whatshot_mcp.errors import UnsupportedCapability
+from whatshot_mcp.server import build_mcp_server, build_streamable_http_app
 
 EXPECTED_NAMES = [
     "whatshot_analyze_hot_event",
@@ -407,9 +407,7 @@ def test_universal_tool_schema_is_strict_camel_case_and_forwards_board_key() -> 
                 )
                 correct = await client.post(
                     "/mcp",
-                    headers=_modern_headers(
-                        "tools/call", name="whatshot_get_current"
-                    ),
+                    headers=_modern_headers("tools/call", name="whatshot_get_current"),
                     json=_modern_request(
                         "tools/call",
                         {
@@ -424,9 +422,7 @@ def test_universal_tool_schema_is_strict_camel_case_and_forwards_board_key() -> 
                 )
                 snake_case = await client.post(
                     "/mcp",
-                    headers=_modern_headers(
-                        "tools/call", name="whatshot_get_current"
-                    ),
+                    headers=_modern_headers("tools/call", name="whatshot_get_current"),
                     json=_modern_request(
                         "tools/call",
                         {
@@ -440,9 +436,7 @@ def test_universal_tool_schema_is_strict_camel_case_and_forwards_board_key() -> 
                 )
                 string_limit = await client.post(
                     "/mcp",
-                    headers=_modern_headers(
-                        "tools/call", name="whatshot_get_current"
-                    ),
+                    headers=_modern_headers("tools/call", name="whatshot_get_current"),
                     json=_modern_request(
                         "tools/call",
                         {
@@ -452,9 +446,7 @@ def test_universal_tool_schema_is_strict_camel_case_and_forwards_board_key() -> 
                     ),
                 )
 
-        tools = {
-            tool["name"]: tool for tool in listed.json()["result"]["tools"]
-        }
+        tools = {tool["name"]: tool for tool in listed.json()["result"]["tools"]}
         schema = tools["whatshot_get_current"]["inputSchema"]
         assert schema["additionalProperties"] is False
         assert "boardKey" in schema["properties"]

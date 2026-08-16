@@ -11,8 +11,8 @@ from mcp_types import (
     PROTOCOL_VERSION_META_KEY,
 )
 
-from whats_hot_mcp.contracts.v1 import BackendCapabilities
-from whats_hot_mcp.server import (
+from whatshot_mcp.contracts.v1 import BackendCapabilities
+from whatshot_mcp.server import (
     StaticBearerAuthMiddleware,
     build_mcp_server,
     build_streamable_http_app,

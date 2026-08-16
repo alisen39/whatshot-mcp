@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [project]
-name = "whats-hot-mcp"
+name = "whatshot-mcp"
 version = "0.2.0"
 description = "Open MCP server and backend contract models for WhatsHot"
 readme = "README.md"
@@ -27,12 +27,12 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/alisen39/whats-hot-mcp"
-Repository = "https://github.com/alisen39/whats-hot-mcp"
-Issues = "https://github.com/alisen39/whats-hot-mcp/issues"
+Homepage = "https://github.com/alisen39/whatshot-mcp"
+Repository = "https://github.com/alisen39/whatshot-mcp"
+Issues = "https://github.com/alisen39/whatshot-mcp/issues"
 
 [project.scripts]
-whats-hot-mcp = "whats_hot_mcp.cli:main"
+whatshot-mcp = "whatshot_mcp.cli:main"
 
 [dependency-groups]
 dev = [
@@ -42,7 +42,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/whats_hot_mcp"]
+packages = ["src/whatshot_mcp"]
 
 [tool.hatch.build.targets.sdist]
 include = [

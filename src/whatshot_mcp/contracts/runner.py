@@ -11,9 +11,9 @@ from typing import Any
 
 from pydantic import SecretStr
 
-from whats_hot_mcp.backend import BackendClient
-from whats_hot_mcp.config import BackendSettings
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.backend import BackendClient
+from whatshot_mcp.config import BackendSettings
+from whatshot_mcp.contracts.v1 import (
     BatchCurrentRequest,
     BatchCurrentTarget,
     CategoryCurrentRequest,

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from whats_hot_mcp.contracts.v1 import BackendErrorCode, ErrorEnvelope
+from whatshot_mcp.contracts.v1 import BackendErrorCode, ErrorEnvelope
 
 FIXTURES = Path(__file__).parents[1] / "contracts" / "fixtures" / "v1"
 

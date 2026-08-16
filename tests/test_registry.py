@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from whats_hot_mcp.contracts.v1 import BackendCapabilities
-from whats_hot_mcp.tools import (
+from whatshot_mcp.contracts.v1 import BackendCapabilities
+from whatshot_mcp.tools import (
     ALL_TOOL_MAP,
     ALL_TOOL_SPECS,
     CLOUD_TOOL_SPECS,

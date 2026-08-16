@@ -6,8 +6,8 @@ from typing import Annotated
 
 from pydantic import Field, field_serializer
 
-from whats_hot_mcp.contracts.v1.common import ContractModel, ItemKind
-from whats_hot_mcp.contracts.v1.current import CurrentData, Freshness, TargetError
+from whatshot_mcp.contracts.v1.common import ContractModel, ItemKind
+from whatshot_mcp.contracts.v1.current import CurrentData, Freshness, TargetError
 
 
 class NavigationQuery(ContractModel):

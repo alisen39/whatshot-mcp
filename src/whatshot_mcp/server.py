@@ -21,15 +21,15 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Receive, Scope, Send
 
-from whats_hot_mcp import __version__
-from whats_hot_mcp.analysis import (
+from whatshot_mcp import __version__
+from whatshot_mcp.analysis import (
     analyze_hot_event as build_hot_event_analysis,
 )
-from whats_hot_mcp.analysis import (
+from whatshot_mcp.analysis import (
     analyze_newsflash_coverage as build_newsflash_coverage_analysis,
 )
-from whats_hot_mcp.backend import BackendClient
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.backend import BackendClient
+from whatshot_mcp.contracts.v1 import (
     BackendCapabilities,
     BatchCurrentData,
     BatchCurrentRequest,
@@ -57,8 +57,8 @@ from whats_hot_mcp.contracts.v1 import (
     TrendData,
     TrendQuery,
 )
-from whats_hot_mcp.errors import BackendClientError
-from whats_hot_mcp.tools import (
+from whatshot_mcp.errors import BackendClientError
+from whatshot_mcp.tools import (
     ALL_TOOL_MAP,
     ToolSpec,
     tool_specs_for_capabilities,

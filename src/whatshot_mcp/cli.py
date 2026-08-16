@@ -10,16 +10,16 @@ from pathlib import Path
 
 import uvicorn
 
-from whats_hot_mcp import __version__
-from whats_hot_mcp.backend import BackendClient
-from whats_hot_mcp.config import Settings
-from whats_hot_mcp.contracts.v1 import BOARD_KEY_VERSION, BackendCapabilities
-from whats_hot_mcp.errors import (
+from whatshot_mcp import __version__
+from whatshot_mcp.backend import BackendClient
+from whatshot_mcp.config import Settings
+from whatshot_mcp.contracts.v1 import BOARD_KEY_VERSION, BackendCapabilities
+from whatshot_mcp.errors import (
     BackendBoardKeyVersionError,
     BackendClientError,
     BackendTransportError,
 )
-from whats_hot_mcp.server import build_mcp_server, build_streamable_http_app
+from whatshot_mcp.server import build_mcp_server, build_streamable_http_app
 
 EXIT_OK = 0
 EXIT_CONFIG_ERROR = 2
@@ -39,7 +39,7 @@ def _add_serve_options(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="whats-hot-mcp")
+    parser = argparse.ArgumentParser(prog="whatshot-mcp")
     commands = parser.add_subparsers(dest="command", required=True)
 
     serve = commands.add_parser("serve", help="start the MCP server")
@@ -158,7 +158,7 @@ def _configuration_error() -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "version":
-        print(f"whats-hot-mcp {__version__}")
+        print(f"whatshot-mcp {__version__}")
         return EXIT_OK
 
     try:

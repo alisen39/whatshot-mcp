@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.v1 import (
     BOARD_KEY_VERSION,
     SUPPORTED_BOARD_DIMENSIONS,
     BoardIdentityError,

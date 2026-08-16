@@ -7,7 +7,7 @@ from typing import Annotated, Literal
 
 from pydantic import Field, field_serializer, model_validator
 
-from whats_hot_mcp.contracts.v1.common import ContractModel, ItemKind
+from whatshot_mcp.contracts.v1.common import ContractModel, ItemKind
 
 
 class CapabilityProfile(StrEnum):

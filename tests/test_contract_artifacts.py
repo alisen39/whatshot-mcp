@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from whats_hot_mcp.contracts.export import build_artifacts, build_openapi
+from whatshot_mcp.contracts.export import build_artifacts, build_openapi
 
 
 def test_committed_contract_artifacts_are_current() -> None:

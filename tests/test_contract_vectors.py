@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.v1 import (
     canonical_board_key,
     normalize_search_text,
 )

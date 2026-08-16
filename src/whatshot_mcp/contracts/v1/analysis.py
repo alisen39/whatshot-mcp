@@ -6,8 +6,8 @@ from typing import Annotated
 
 from pydantic import AwareDatetime, Field
 
-from whats_hot_mcp.contracts.v1.common import ContractModel, Coverage
-from whats_hot_mcp.contracts.v1.history import Evidence
+from whatshot_mcp.contracts.v1.common import ContractModel, Coverage
+from whatshot_mcp.contracts.v1.history import Evidence
 
 
 class AnalysisQuery(ContractModel):

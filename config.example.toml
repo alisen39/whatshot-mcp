@@ -8,14 +8,14 @@ path = "/mcp"
 # bind and provide the token through token_env. "oauth" is reserved and
 # currently fails closed.
 mode = "none"
-token_env = "WHATS_HOT_MCP_SERVER_TOKEN"
+token_env = "WHATSHOT_MCP_SERVER_TOKEN"
 
 [backend]
 url = "http://127.0.0.1:6690/api/v1"
 # For a local private config file, an API key may be set directly. Do not commit
 # the real value. The environment variable below takes precedence when present.
 # api_key = "replace-me"
-api_key_env = "WHATS_HOT_MCP_BACKEND_API_KEY"
+api_key_env = "WHATSHOT_MCP_BACKEND_API_KEY"
 timeout_seconds = 15
 capabilities_ttl_seconds = 60
 

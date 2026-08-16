@@ -1,7 +1,7 @@
 # Contract artifacts
 
 Backend Contract v1 is defined by the strict Pydantic models in
-`src/whats_hot_mcp/contracts/v1/`. This directory holds release-facing artifacts
+`src/whatshot_mcp/contracts/v1/`. This directory holds release-facing artifacts
 derived from those models.
 
 Rules:
@@ -24,8 +24,8 @@ optional and records this distinction in `x-whatshot-deployment-auth`.
 Regenerate and verify:
 
 ```bash
-uv run python -m whats_hot_mcp.contracts.export
-uv run python -m whats_hot_mcp.contracts.export --check
+uv run python -m whatshot_mcp.contracts.export
+uv run python -m whatshot_mcp.contracts.export --check
 ```
 
 `manifest-v1.json` records SHA-256 checksums for the OpenAPI document and all
@@ -34,7 +34,7 @@ JSON Schemas.
 Probe a running implementation with the same strict models:
 
 ```bash
-python -m whats_hot_mcp.contracts.runner \
+python -m whatshot_mcp.contracts.runner \
   --base-url http://127.0.0.1:6690/api/v1
 ```
 

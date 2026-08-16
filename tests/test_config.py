@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from whats_hot_mcp.config import Settings
+from whatshot_mcp.config import Settings
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -40,8 +40,8 @@ capabilities_ttl_seconds = 60
     settings = Settings.load(
         config,
         environ={
-            "WHATS_HOT_MCP_SERVER_PORT": "7777",
-            "WHATS_HOT_MCP_BACKEND_URL": "https://api.whatshot.top/api/v1",
+            "WHATSHOT_MCP_SERVER_PORT": "7777",
+            "WHATSHOT_MCP_BACKEND_URL": "https://api.whatshot.top/api/v1",
             "CUSTOM_BACKEND_KEY": "super-secret",
         },
     )
@@ -64,11 +64,11 @@ capabilities_ttl_seconds = 60
 )
 def test_backend_url_fails_closed(url: str) -> None:
     with pytest.raises(ValidationError):
-        Settings.load(environ={"WHATS_HOT_MCP_BACKEND_URL": url})
+        Settings.load(environ={"WHATSHOT_MCP_BACKEND_URL": url})
 
 
 def test_streamable_http_cannot_bind_publicly_without_inbound_auth() -> None:
-    settings = Settings.load(environ={"WHATS_HOT_MCP_SERVER_BIND": "0.0.0.0"})
+    settings = Settings.load(environ={"WHATSHOT_MCP_SERVER_BIND": "0.0.0.0"})
     with pytest.raises(ValueError, match="non-loopback"):
         settings.assert_streamable_http_safe()
 
@@ -76,9 +76,9 @@ def test_streamable_http_cannot_bind_publicly_without_inbound_auth() -> None:
 def test_static_token_allows_non_loopback_and_secret_is_hidden() -> None:
     settings = Settings.load(
         environ={
-            "WHATS_HOT_MCP_SERVER_BIND": "0.0.0.0",
-            "WHATS_HOT_MCP_SERVER_AUTH_MODE": "static_token",
-            "WHATS_HOT_MCP_SERVER_TOKEN": "inbound-secret",
+            "WHATSHOT_MCP_SERVER_BIND": "0.0.0.0",
+            "WHATSHOT_MCP_SERVER_AUTH_MODE": "static_token",
+            "WHATSHOT_MCP_SERVER_TOKEN": "inbound-secret",
         }
     )
     settings.assert_streamable_http_safe()
@@ -88,10 +88,10 @@ def test_static_token_allows_non_loopback_and_secret_is_hidden() -> None:
 
 
 def test_static_token_missing_and_oauth_fail_closed() -> None:
-    missing = Settings.load(environ={"WHATS_HOT_MCP_SERVER_AUTH_MODE": "static_token"})
+    missing = Settings.load(environ={"WHATSHOT_MCP_SERVER_AUTH_MODE": "static_token"})
     with pytest.raises(ValueError, match="requires a non-empty"):
         missing.assert_streamable_http_safe()
 
-    oauth = Settings.load(environ={"WHATS_HOT_MCP_SERVER_AUTH_MODE": "oauth"})
+    oauth = Settings.load(environ={"WHATSHOT_MCP_SERVER_AUTH_MODE": "oauth"})
     with pytest.raises(ValueError, match="not implemented"):
         oauth.assert_streamable_http_safe()

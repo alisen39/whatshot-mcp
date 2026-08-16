@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from whats_hot_mcp.contracts.v1 import BackendErrorCode
+from whatshot_mcp.contracts.v1 import BackendErrorCode
 
 
 class BackendClientError(RuntimeError):

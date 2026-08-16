@@ -20,7 +20,7 @@ class ConfigModel(BaseModel):
 
 class ServerAuthSettings(ConfigModel):
     mode: Literal["none", "static_token", "oauth"] = "none"
-    token_env: str = "WHATS_HOT_MCP_SERVER_TOKEN"
+    token_env: str = "WHATSHOT_MCP_SERVER_TOKEN"
     token: SecretStr | None = Field(default=None, exclude=True, repr=False)
 
 
@@ -40,7 +40,7 @@ class ServerSettings(ConfigModel):
 
 class BackendSettings(ConfigModel):
     url: str = "http://127.0.0.1:6690/api/v1"
-    api_key_env: str = "WHATS_HOT_MCP_BACKEND_API_KEY"
+    api_key_env: str = "WHATSHOT_MCP_BACKEND_API_KEY"
     api_key: SecretStr | None = Field(default=None, exclude=True, repr=False)
     timeout_seconds: float = Field(default=15.0, gt=0, le=300)
     capabilities_ttl_seconds: float = Field(default=60.0, ge=0, le=3600)
@@ -101,12 +101,12 @@ class Settings(BaseSettings):
 
         _apply_env_overrides(raw, env)
         settings = cls.model_validate(raw)
-        api_key = env.get("WHATS_HOT_MCP_BACKEND_API_KEY")
+        api_key = env.get("WHATSHOT_MCP_BACKEND_API_KEY")
         if api_key is None and settings.backend.api_key_env:
             api_key = env.get(settings.backend.api_key_env)
         if api_key:
             settings.backend.api_key = SecretStr(api_key)
-        token = env.get("WHATS_HOT_MCP_SERVER_TOKEN")
+        token = env.get("WHATSHOT_MCP_SERVER_TOKEN")
         if token is None and settings.server.auth.token_env:
             token = env.get(settings.server.auth.token_env)
         if token:
@@ -130,19 +130,19 @@ class Settings(BaseSettings):
 
 
 _ENV_PATHS: dict[str, tuple[str, str, Any]] = {
-    "WHATS_HOT_MCP_SERVER_BIND": ("server", "bind", str),
-    "WHATS_HOT_MCP_SERVER_PORT": ("server", "port", int),
-    "WHATS_HOT_MCP_SERVER_PATH": ("server", "path", str),
-    "WHATS_HOT_MCP_SERVER_AUTH_MODE": ("server.auth", "mode", str),
-    "WHATS_HOT_MCP_SERVER_TOKEN_ENV": ("server.auth", "token_env", str),
-    "WHATS_HOT_MCP_BACKEND_URL": ("backend", "url", str),
-    "WHATS_HOT_MCP_BACKEND_API_KEY_ENV": ("backend", "api_key_env", str),
-    "WHATS_HOT_MCP_BACKEND_TIMEOUT_SECONDS": (
+    "WHATSHOT_MCP_SERVER_BIND": ("server", "bind", str),
+    "WHATSHOT_MCP_SERVER_PORT": ("server", "port", int),
+    "WHATSHOT_MCP_SERVER_PATH": ("server", "path", str),
+    "WHATSHOT_MCP_SERVER_AUTH_MODE": ("server.auth", "mode", str),
+    "WHATSHOT_MCP_SERVER_TOKEN_ENV": ("server.auth", "token_env", str),
+    "WHATSHOT_MCP_BACKEND_URL": ("backend", "url", str),
+    "WHATSHOT_MCP_BACKEND_API_KEY_ENV": ("backend", "api_key_env", str),
+    "WHATSHOT_MCP_BACKEND_TIMEOUT_SECONDS": (
         "backend",
         "timeout_seconds",
         float,
     ),
-    "WHATS_HOT_MCP_BACKEND_CAPABILITIES_TTL_SECONDS": (
+    "WHATSHOT_MCP_BACKEND_CAPABILITIES_TTL_SECONDS": (
         "backend",
         "capabilities_ttl_seconds",
         float,

@@ -5,18 +5,18 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from whats_hot_mcp.analysis import (
+from whatshot_mcp.analysis import (
     analyze_hot_event,
     analyze_newsflash_coverage,
 )
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.v1 import (
     Coverage,
     Evidence,
     HistoryPageData,
     HotEventAnalysisQuery,
     NewsflashCoverageAnalysisQuery,
 )
-from whats_hot_mcp.errors import BackendProtocolError
+from whatshot_mcp.errors import BackendProtocolError
 
 NOW = datetime(2026, 8, 13, tzinfo=UTC)
 
@@ -221,7 +221,7 @@ def test_analysis_schema_requires_completeness_and_approximation_fields() -> Non
     assert "scanBudget" in schema["properties"]
     assert "evidenceLimit" in schema["properties"]
 
-    from whats_hot_mcp.contracts.v1 import HotEventAnalysisData
+    from whatshot_mcp.contracts.v1 import HotEventAnalysisData
 
     output = HotEventAnalysisData.model_json_schema(by_alias=True)
     assert {"analysisComplete", "scannedCount", "coverage"} <= set(output["required"])

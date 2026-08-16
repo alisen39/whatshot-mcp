@@ -9,8 +9,8 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 
-from whats_hot_mcp.backend import BackendClient
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.backend import BackendClient
+from whatshot_mcp.contracts.v1 import (
     Coverage,
     Evidence,
     HistorySearchQuery,
@@ -24,7 +24,7 @@ from whats_hot_mcp.contracts.v1 import (
     NewsflashCoverageSummary,
     NewsflashEvent,
 )
-from whats_hot_mcp.errors import BackendProtocolError
+from whatshot_mcp.errors import BackendProtocolError
 
 _SPACE_RE = re.compile(r"\s+")
 _EXTRA_PUNCTUATION = "，。！？；：、“”‘’（）【】《》—…"

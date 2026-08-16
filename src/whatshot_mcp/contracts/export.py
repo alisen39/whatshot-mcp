@@ -10,7 +10,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.v1 import (
     BackendCapabilities,
     BatchCurrentData,
     BatchCurrentRequest,

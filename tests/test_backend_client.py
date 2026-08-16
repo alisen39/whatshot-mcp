@@ -9,8 +9,8 @@ from typing import Any
 import httpx
 import pytest
 
-from whats_hot_mcp.backend import BackendClient
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.backend import BackendClient
+from whatshot_mcp.contracts.v1 import (
     BackendErrorCode,
     CategoryCurrentRequest,
     CoverageQuery,
@@ -21,7 +21,7 @@ from whats_hot_mcp.contracts.v1 import (
     SourceListQuery,
     TrendQuery,
 )
-from whats_hot_mcp.errors import (
+from whatshot_mcp.errors import (
     BackendAPIError,
     BackendBoardKeyVersionError,
     BackendProtocolError,
@@ -111,7 +111,7 @@ def test_authorization_is_header_only_and_contract_models_are_used() -> None:
 
     def handler(request: httpx.Request) -> httpx.Response:
         requests.append(request)
-        assert request.headers["user-agent"].startswith("whats-hot-mcp/")
+        assert request.headers["user-agent"].startswith("whatshot-mcp/")
         assert request.headers["authorization"] == "Bearer super-secret"
         if request.url.path.endswith("/capabilities"):
             assert (

@@ -844,7 +844,7 @@ wheels = [
 ]
 
 [[package]]
-name = "whats-hot-mcp"
+name = "whatshot-mcp"
 version = "0.2.0"
 source = { editable = "." }
 dependencies = [

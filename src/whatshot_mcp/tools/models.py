@@ -6,7 +6,7 @@ from typing import Annotated
 
 from pydantic import Field
 
-from whats_hot_mcp.contracts.v1 import ContractModel
+from whatshot_mcp.contracts.v1 import ContractModel
 
 
 class EmptyInput(ContractModel):

@@ -6,7 +6,7 @@ from typing import Annotated, Literal
 
 from pydantic import AwareDatetime, Field
 
-from whats_hot_mcp.contracts.v1.common import ContractModel, Coverage, ItemKind
+from whatshot_mcp.contracts.v1.common import ContractModel, Coverage, ItemKind
 
 
 class HistoryQuery(ContractModel):

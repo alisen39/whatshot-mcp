@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from whats_hot_mcp.contracts.v1 import (
+from whatshot_mcp.contracts.v1 import (
     BackendCapabilities,
     BatchCurrentData,
     BatchCurrentRequest,
@@ -27,8 +27,8 @@ from whats_hot_mcp.contracts.v1 import (
     TrendData,
     TrendQuery,
 )
-from whats_hot_mcp.tools.models import EmptyInput, SourceSchemaInput
-from whats_hot_mcp.tools.spec import ToolAvailability, ToolSpec
+from whatshot_mcp.tools.models import EmptyInput, SourceSchemaInput
+from whatshot_mcp.tools.spec import ToolAvailability, ToolSpec
 
 _DATA_READ = frozenset({"data:read"})
 
