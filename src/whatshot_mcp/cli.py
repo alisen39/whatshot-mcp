@@ -99,6 +99,8 @@ def run(settings: Settings) -> None:
         path=settings.server.path,
         host=settings.server.bind,
         bearer_passthrough=settings.server.auth.mode == "bearer_passthrough",
+        allowed_hosts=settings.server.allowed_hosts,
+        allowed_origins=settings.server.allowed_origins,
     )
     uvicorn.run(
         app,

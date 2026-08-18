@@ -2,6 +2,10 @@
 bind = "127.0.0.1"
 port = 6691
 path = "/mcp"
+# When a TLS reverse proxy preserves a public Host header, list it explicitly.
+# Loopback hosts remain allowed automatically.
+allowed_hosts = []
+allowed_origins = []
 
 [server.auth]
 # "none" is allowed only on loopback. Use "bearer_passthrough" for a

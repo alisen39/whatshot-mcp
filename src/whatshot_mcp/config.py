@@ -26,6 +26,8 @@ class ServerSettings(ConfigModel):
     bind: str = "127.0.0.1"
     port: int = Field(default=6691, ge=1, le=65535)
     path: str = "/mcp"
+    allowed_hosts: list[str] = Field(default_factory=list)
+    allowed_origins: list[str] = Field(default_factory=list)
     auth: ServerAuthSettings = Field(default_factory=ServerAuthSettings)
 
     @field_validator("path")
@@ -34,6 +36,13 @@ class ServerSettings(ConfigModel):
         if not value.startswith("/") or "?" in value or "#" in value:
             raise ValueError("server.path must be an absolute URL path")
         return value
+
+    @field_validator("allowed_hosts", "allowed_origins")
+    @classmethod
+    def validate_security_values(cls, values: list[str]) -> list[str]:
+        if any(not value or value != value.strip() for value in values):
+            raise ValueError("transport security values must be non-empty and trimmed")
+        return values
 
 
 class BackendSettings(ConfigModel):
@@ -114,6 +123,10 @@ class Settings(BaseSettings):
             if self.backend.api_key is not None:
                 raise ValueError(
                     "server.auth.mode=bearer_passthrough forbids a static Backend key"
+                )
+            if not _is_loopback(self.server.bind) and not self.server.allowed_hosts:
+                raise ValueError(
+                    "non-loopback bearer_passthrough requires server.allowed_hosts"
                 )
             return
         if not _is_loopback(self.server.bind):

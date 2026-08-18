@@ -77,6 +77,16 @@ may still be stored in an uncommitted local configuration or resolved from
 forbids that static key so hosted requests cannot silently fall back to a
 deployment identity.
 
+When a TLS reverse proxy preserves the public Host header, add that exact host
+to `server.allowed_hosts` so SDK DNS-rebinding protection accepts both the
+public hostname and the automatically retained loopback hosts:
+
+```toml
+[server]
+allowed_hosts = ["mcp.whatshot.top"]
+allowed_origins = []
+```
+
 Example remote client configuration:
 
 ```json
@@ -171,8 +181,10 @@ key may be kept in the ignored local copy or supplied by environment variable
 only for loopback development and operational checks. Unauthenticated
 Streamable HTTP is restricted to loopback. A non-loopback bind requires
 `server.auth.mode = "bearer_passthrough"`; every request then supplies its own
-`wh_live_` key, and configuring a static Backend key fails closed. `oauth` is
-reserved and currently fails closed.
+`wh_live_` key, and configuring a static Backend key fails closed. A
+non-loopback bind must also declare `server.allowed_hosts`; reverse-proxied
+loopback deployments declare the preserved public Host as shown above. `oauth`
+is reserved and currently fails closed.
 
 ## License
 

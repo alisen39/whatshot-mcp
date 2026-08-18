@@ -80,8 +80,20 @@ def test_bearer_passthrough_allows_non_loopback_without_shared_secrets() -> None
             "WHATSHOT_MCP_SERVER_AUTH_MODE": "bearer_passthrough",
         }
     )
+    settings.server.allowed_hosts = ["mcp.whatshot.top"]
     settings.assert_streamable_http_safe()
     assert settings.server.auth.mode == "bearer_passthrough"
+
+
+def test_non_loopback_bearer_passthrough_requires_allowed_hosts() -> None:
+    settings = Settings.load(
+        environ={
+            "WHATSHOT_MCP_SERVER_BIND": "0.0.0.0",
+            "WHATSHOT_MCP_SERVER_AUTH_MODE": "bearer_passthrough",
+        }
+    )
+    with pytest.raises(ValueError, match="requires server.allowed_hosts"):
+        settings.assert_streamable_http_safe()
 
 
 def test_bearer_passthrough_forbids_shared_backend_key() -> None:

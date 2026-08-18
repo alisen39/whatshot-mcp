@@ -162,6 +162,36 @@ def test_duplicate_authorization_headers_are_rejected() -> None:
     assert asyncio.run(scenario()).status_code == 401
 
 
+def test_public_host_must_be_explicitly_allowed() -> None:
+    async def request(allowed_hosts: list[str] | None) -> httpx.Response:
+        backend = BackendClient("http://127.0.0.1:6690/api/v1")
+        server = build_mcp_server(backend, _capabilities())
+        app = build_streamable_http_app(
+            server,
+            bearer_passthrough=True,
+            allowed_hosts=allowed_hosts,
+        )
+        inner_app = app.app  # type: ignore[attr-defined]
+        transport = httpx.ASGITransport(app=app)
+        async with inner_app.router.lifespan_context(inner_app):
+            async with httpx.AsyncClient(
+                transport=transport,
+                base_url="https://mcp.whatshot.top",
+            ) as client:
+                response = await client.post(
+                    "/mcp",
+                    headers=_headers(_api_key("a")),
+                    json=_request(),
+                )
+        await backend.aclose()
+        return response
+
+    rejected = asyncio.run(request(None))
+    accepted = asyncio.run(request(["mcp.whatshot.top"]))
+    assert rejected.status_code == 421
+    assert accepted.status_code == 200
+
+
 def test_concurrent_requests_forward_their_own_api_key() -> None:
     first_key = _api_key("a")
     second_key = _api_key("b")

@@ -13,6 +13,7 @@ from typing import Annotated, Any, Literal
 from mcp.server import CacheHint, MCPServer, ServerRequestContext
 from mcp.server.context import CallNext, HandlerResult
 from mcp.server.mcpserver.exceptions import ToolError
+from mcp.server.transport_security import TransportSecuritySettings
 from mcp_types import ToolAnnotations
 from pydantic import BaseModel, Field, ValidationError
 from starlette.applications import Starlette
@@ -453,13 +454,34 @@ def build_streamable_http_app(
     path: str = "/mcp",
     host: str = "127.0.0.1",
     bearer_passthrough: bool = False,
+    allowed_hosts: list[str] | None = None,
+    allowed_origins: list[str] | None = None,
 ) -> ASGIApp:
     """Build the SDK v2 HTTP app with optional Developer key passthrough."""
+
+    transport_security = None
+    if allowed_hosts or allowed_origins:
+        transport_security = TransportSecuritySettings(
+            enable_dns_rebinding_protection=True,
+            allowed_hosts=[
+                "127.0.0.1:*",
+                "localhost:*",
+                "[::1]:*",
+                *(allowed_hosts or []),
+            ],
+            allowed_origins=[
+                "http://127.0.0.1:*",
+                "http://localhost:*",
+                "http://[::1]:*",
+                *(allowed_origins or []),
+            ],
+        )
 
     app: Starlette = server.streamable_http_app(
         streamable_http_path=path,
         json_response=True,
         stateless_http=True,
+        transport_security=transport_security,
         host=host,
     )
 
