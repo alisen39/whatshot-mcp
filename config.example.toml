@@ -4,16 +4,17 @@ port = 6691
 path = "/mcp"
 
 [server.auth]
-# "none" is allowed only on loopback. Use "static_token" for a non-loopback
-# bind and provide the token through token_env. "oauth" is reserved and
-# currently fails closed.
+# "none" is allowed only on loopback. Use "bearer_passthrough" for a
+# non-loopback bind. It requires each client to send its own wh_live_ key as
+# Authorization: Bearer <key>. "oauth" is reserved and currently fails closed.
 mode = "none"
-token_env = "WHATSHOT_MCP_SERVER_TOKEN"
 
 [backend]
 url = "http://127.0.0.1:6690/api/v1"
-# For a local private config file, an API key may be set directly. Do not commit
-# the real value. The environment variable below takes precedence when present.
+# A static Backend key is only for loopback development and operational checks.
+# Do not configure it when server.auth.mode="bearer_passthrough": hosted calls
+# use the request-scoped client key instead. The environment value takes
+# precedence when present.
 # api_key = "replace-me"
 api_key_env = "WHATSHOT_MCP_BACKEND_API_KEY"
 timeout_seconds = 15

@@ -11,6 +11,7 @@ from pathlib import Path
 import uvicorn
 
 from whatshot_mcp import __version__
+from whatshot_mcp.auth import current_developer_api_key
 from whatshot_mcp.backend import BackendClient
 from whatshot_mcp.config import Settings
 from whatshot_mcp.contracts.v1 import BOARD_KEY_VERSION, BackendCapabilities
@@ -75,14 +76,18 @@ def run(settings: Settings) -> None:
     capabilities = asyncio.run(_load_startup_capabilities(settings))
     backend = BackendClient(
         settings.backend.url,
-        api_key=settings.backend.api_key,
+        api_key=(
+            settings.backend.api_key
+            if settings.server.auth.mode != "bearer_passthrough"
+            else None
+        ),
+        api_key_provider=(
+            current_developer_api_key
+            if settings.server.auth.mode == "bearer_passthrough"
+            else None
+        ),
         timeout_seconds=settings.backend.timeout_seconds,
         capabilities_ttl_seconds=settings.backend.capabilities_ttl_seconds,
-    )
-    inbound_token = (
-        settings.server.auth.token
-        if settings.server.auth.mode == "static_token"
-        else None
     )
     server = build_mcp_server(
         backend,
@@ -93,7 +98,7 @@ def run(settings: Settings) -> None:
         server,
         path=settings.server.path,
         host=settings.server.bind,
-        inbound_token=inbound_token,
+        bearer_passthrough=settings.server.auth.mode == "bearer_passthrough",
     )
     uvicorn.run(
         app,

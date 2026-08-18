@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import time
+from collections.abc import Callable
 from typing import Any, TypeVar
 from urllib.parse import quote
 
@@ -54,14 +55,18 @@ class BackendClient:
         base_url: str,
         *,
         api_key: SecretStr | str | None = None,
+        api_key_provider: Callable[[], str | None] | None = None,
         timeout_seconds: float = 15.0,
         capabilities_ttl_seconds: float = 60.0,
         transport: httpx.AsyncBaseTransport | None = None,
     ) -> None:
+        if api_key is not None and api_key_provider is not None:
+            raise ValueError("api_key and api_key_provider are mutually exclusive")
         self.base_url = base_url.rstrip("/") + "/"
         self._api_key = (
             api_key.get_secret_value() if isinstance(api_key, SecretStr) else api_key
         )
+        self._api_key_provider = api_key_provider
         self._capabilities_ttl = capabilities_ttl_seconds
         self._cached_capabilities: BackendCapabilities | None = None
         self._capabilities_expires_at = 0.0
@@ -248,8 +253,9 @@ class BackendClient:
             "User-Agent": f"whatshot-mcp/{__version__}",
             "X-Whatshot-Tool-Name": tool_name,
         }
-        if self._api_key:
-            headers["Authorization"] = f"Bearer {self._api_key}"
+        api_key = self._api_key_provider() if self._api_key_provider else self._api_key
+        if api_key:
+            headers["Authorization"] = f"Bearer {api_key}"
         try:
             response = await self._client.request(
                 method,

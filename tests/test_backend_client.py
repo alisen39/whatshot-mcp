@@ -173,6 +173,15 @@ def test_authorization_is_header_only_and_contract_models_are_used() -> None:
     asyncio.run(scenario())
 
 
+def test_static_and_request_scoped_api_keys_are_mutually_exclusive() -> None:
+    with pytest.raises(ValueError, match="mutually exclusive"):
+        BackendClient(
+            "http://127.0.0.1:6690/api/v1",
+            api_key="static",
+            api_key_provider=lambda: "request-scoped",
+        )
+
+
 def test_source_query_and_path_follow_contract() -> None:
     seen_paths: list[str] = []
 

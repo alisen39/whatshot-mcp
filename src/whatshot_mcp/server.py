@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import hmac
 import json
 from collections.abc import AsyncIterator, Callable, Coroutine
 from contextlib import asynccontextmanager
@@ -15,11 +14,11 @@ from mcp.server import CacheHint, MCPServer, ServerRequestContext
 from mcp.server.context import CallNext, HandlerResult
 from mcp.server.mcpserver.exceptions import ToolError
 from mcp_types import ToolAnnotations
-from pydantic import BaseModel, Field, SecretStr, ValidationError
+from pydantic import BaseModel, Field, ValidationError
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from starlette.types import ASGIApp, Receive, Scope, Send
+from starlette.types import ASGIApp
 
 from whatshot_mcp import __version__
 from whatshot_mcp.analysis import (
@@ -28,6 +27,7 @@ from whatshot_mcp.analysis import (
 from whatshot_mcp.analysis import (
     analyze_newsflash_coverage as build_newsflash_coverage_analysis,
 )
+from whatshot_mcp.auth import BearerPassthroughAuthMiddleware
 from whatshot_mcp.backend import BackendClient
 from whatshot_mcp.contracts.v1 import (
     BackendCapabilities,
@@ -135,39 +135,6 @@ class WhatsHotMCPServer(MCPServer):
                 detail = f"{location}: {message}" if location else message
                 raise ToolError(f"INVALID_ARGUMENT: {detail}") from None
             raise
-
-
-class StaticBearerAuthMiddleware:
-    """Static Bearer compatibility mode without OAuth discovery metadata."""
-
-    def __init__(self, app: ASGIApp, token: SecretStr | str) -> None:
-        self.app = app
-        self._token = token if isinstance(token, SecretStr) else SecretStr(token)
-
-    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] != "http":
-            await self.app(scope, receive, send)
-            return
-        if scope.get("path") == "/health":
-            await self.app(scope, receive, send)
-            return
-        authorization = dict(scope.get("headers", [])).get(b"authorization", b"")
-        scheme, separator, supplied = authorization.decode("latin-1").partition(" ")
-        valid = (
-            separator == " "
-            and scheme.lower() == "bearer"
-            and bool(supplied)
-            and hmac.compare_digest(supplied, self._token.get_secret_value())
-        )
-        if not valid:
-            response = JSONResponse(
-                {"error": "unauthorized"},
-                status_code=401,
-                headers={"Cache-Control": "no-store"},
-            )
-            await response(scope, receive, send)
-            return
-        await self.app(scope, receive, send)
 
 
 class ToolCatalogMetadata:
@@ -485,9 +452,9 @@ def build_streamable_http_app(
     *,
     path: str = "/mcp",
     host: str = "127.0.0.1",
-    inbound_token: SecretStr | str | None = None,
+    bearer_passthrough: bool = False,
 ) -> ASGIApp:
-    """Build the SDK v2 HTTP app and optionally protect it with static Bearer."""
+    """Build the SDK v2 HTTP app with optional Developer key passthrough."""
 
     app: Starlette = server.streamable_http_app(
         streamable_http_path=path,
@@ -516,6 +483,6 @@ def build_streamable_http_app(
 
     app.add_route("/health", health, methods=["GET"])
     app.add_route("/ready", ready, methods=["GET"])
-    if inbound_token is not None:
-        return StaticBearerAuthMiddleware(app, inbound_token)
+    if bearer_passthrough:
+        return BearerPassthroughAuthMiddleware(app)
     return app

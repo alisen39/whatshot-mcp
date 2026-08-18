@@ -39,8 +39,9 @@ Clients connect to `http://127.0.0.1:6691/mcp` by default. Streamable HTTP is
 the only supported transport.
 
 The HTTP process also exposes a minimal public `GET /health` probe and a
-deployment-level `GET /ready` probe. When static inbound authentication is
-enabled, `/ready` requires the same Bearer token while `/health` remains public.
+deployment-level `GET /ready` probe. In hosted Bearer passthrough mode,
+`/ready` requires a syntactically valid WhatsHot Developer API key while
+`/health` remains public.
 
 Operational commands:
 
@@ -55,22 +56,44 @@ whatshot-mcp version
 `3` Backend unavailable, `4` invalid/error Contract response and `5`
 incompatible board-key version.
 
-The Backend API key may be stored as `backend.api_key` in the uncommitted local
-configuration file, or resolved from `backend.api_key_env`; the environment
-value takes precedence. The key is sent only as an `Authorization: Bearer`
-request header and is never a tool argument.
+Hosted deployments use one end-user credential across both HTTP boundaries.
+Each client sends its own WhatsHot Developer API key:
 
-There are two independent authentication boundaries:
+```http
+Authorization: Bearer wh_live_...
+```
 
-- MCP client → MCP Server: Streamable HTTP may use the configured inbound
-  static Bearer token.
-- MCP Server → Backend `/api/v1`: Core data endpoints are public, while Cloud
-  data endpoints require the configured Backend Bearer token and enforce their
-  declared scopes. The shared OpenAPI contract marks Bearer as optional and
-  records the normative choice in `x-whatshot-deployment-auth`.
+The MCP validates the credential format, binds it only to the current request,
+and sends the same key to the Cloud Backend Contract as a Bearer credential.
+The Cloud Backend remains authoritative for key status, expiry, scopes,
+resources, rate limits, and usage attribution. Concurrent requests do not share
+credentials, and the key is never exposed as a tool argument, result, or log
+field. Supabase login JWTs and the removed shared MCP token format are rejected
+by the hosted MCP boundary.
 
-An inbound MCP token is never reused as a Backend token, and the Backend API
-key is never exposed as a tool argument.
+For loopback development and operational `backend check`, a static Backend key
+may still be stored in an uncommitted local configuration or resolved from
+`backend.api_key_env`. `server.auth.mode="bearer_passthrough"` deliberately
+forbids that static key so hosted requests cannot silently fall back to a
+deployment identity.
+
+Example remote client configuration:
+
+```json
+{
+  "mcp": {
+    "whatshot": {
+      "type": "remote",
+      "url": "https://mcp.whatshot.top/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:WHATSHOT_API_KEY}"
+      }
+    }
+  }
+}
+```
+
 Supported environment overrides include:
 
 ```text
@@ -78,8 +101,6 @@ WHATSHOT_MCP_SERVER_BIND
 WHATSHOT_MCP_SERVER_PORT
 WHATSHOT_MCP_SERVER_PATH
 WHATSHOT_MCP_SERVER_AUTH_MODE
-WHATSHOT_MCP_SERVER_TOKEN_ENV
-WHATSHOT_MCP_SERVER_TOKEN
 WHATSHOT_MCP_BACKEND_URL
 WHATSHOT_MCP_BACKEND_API_KEY
 WHATSHOT_MCP_BACKEND_TIMEOUT_SECONDS
@@ -146,12 +167,12 @@ published without creating a second hand-maintained contract definition.
 ## Configuration
 
 `config.example.toml` records the runtime configuration boundary. A real Backend
-key may be kept in the ignored local copy or supplied by environment variable.
-Unauthenticated Streamable HTTP is restricted to loopback. A non-loopback bind
-requires `server.auth.mode = "static_token"` and a non-empty token resolved from
-`server.auth.token_env`. The incoming token is used only at the HTTP boundary;
-it is never a tool argument or log field. `oauth` is reserved and currently
-fails closed.
+key may be kept in the ignored local copy or supplied by environment variable
+only for loopback development and operational checks. Unauthenticated
+Streamable HTTP is restricted to loopback. A non-loopback bind requires
+`server.auth.mode = "bearer_passthrough"`; every request then supplies its own
+`wh_live_` key, and configuring a static Backend key fails closed. `oauth` is
+reserved and currently fails closed.
 
 ## License
 

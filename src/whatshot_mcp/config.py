@@ -19,9 +19,7 @@ class ConfigModel(BaseModel):
 
 
 class ServerAuthSettings(ConfigModel):
-    mode: Literal["none", "static_token", "oauth"] = "none"
-    token_env: str = "WHATSHOT_MCP_SERVER_TOKEN"
-    token: SecretStr | None = Field(default=None, exclude=True, repr=False)
+    mode: Literal["none", "bearer_passthrough", "oauth"] = "none"
 
 
 class ServerSettings(ConfigModel):
@@ -106,26 +104,22 @@ class Settings(BaseSettings):
             api_key = env.get(settings.backend.api_key_env)
         if api_key:
             settings.backend.api_key = SecretStr(api_key)
-        token = env.get("WHATSHOT_MCP_SERVER_TOKEN")
-        if token is None and settings.server.auth.token_env:
-            token = env.get(settings.server.auth.token_env)
-        if token:
-            settings.server.auth.token = SecretStr(token)
         return settings
 
     def assert_streamable_http_safe(self) -> None:
         auth = self.server.auth
         if auth.mode == "oauth":
             raise ValueError("server.auth.mode=oauth is not implemented")
-        if auth.mode == "static_token":
-            if auth.token is None or not auth.token.get_secret_value():
+        if auth.mode == "bearer_passthrough":
+            if self.backend.api_key is not None:
                 raise ValueError(
-                    f"server.auth.mode=static_token requires a non-empty {auth.token_env}"
+                    "server.auth.mode=bearer_passthrough forbids a static Backend key"
                 )
             return
         if not _is_loopback(self.server.bind):
             raise ValueError(
-                "non-loopback Streamable HTTP requires server.auth.mode=static_token"
+                "non-loopback Streamable HTTP requires "
+                "server.auth.mode=bearer_passthrough"
             )
 
 
@@ -134,7 +128,6 @@ _ENV_PATHS: dict[str, tuple[str, str, Any]] = {
     "WHATSHOT_MCP_SERVER_PORT": ("server", "port", int),
     "WHATSHOT_MCP_SERVER_PATH": ("server", "path", str),
     "WHATSHOT_MCP_SERVER_AUTH_MODE": ("server.auth", "mode", str),
-    "WHATSHOT_MCP_SERVER_TOKEN_ENV": ("server.auth", "token_env", str),
     "WHATSHOT_MCP_BACKEND_URL": ("backend", "url", str),
     "WHATSHOT_MCP_BACKEND_API_KEY_ENV": ("backend", "api_key_env", str),
     "WHATSHOT_MCP_BACKEND_TIMEOUT_SECONDS": (

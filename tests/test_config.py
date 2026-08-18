@@ -73,25 +73,31 @@ def test_streamable_http_cannot_bind_publicly_without_inbound_auth() -> None:
         settings.assert_streamable_http_safe()
 
 
-def test_static_token_allows_non_loopback_and_secret_is_hidden() -> None:
+def test_bearer_passthrough_allows_non_loopback_without_shared_secrets() -> None:
     settings = Settings.load(
         environ={
             "WHATSHOT_MCP_SERVER_BIND": "0.0.0.0",
-            "WHATSHOT_MCP_SERVER_AUTH_MODE": "static_token",
-            "WHATSHOT_MCP_SERVER_TOKEN": "inbound-secret",
+            "WHATSHOT_MCP_SERVER_AUTH_MODE": "bearer_passthrough",
         }
     )
     settings.assert_streamable_http_safe()
-    assert settings.server.auth.token is not None
-    assert settings.server.auth.token.get_secret_value() == "inbound-secret"
-    assert "inbound-secret" not in repr(settings)
+    assert settings.server.auth.mode == "bearer_passthrough"
 
 
-def test_static_token_missing_and_oauth_fail_closed() -> None:
-    missing = Settings.load(environ={"WHATSHOT_MCP_SERVER_AUTH_MODE": "static_token"})
-    with pytest.raises(ValueError, match="requires a non-empty"):
-        missing.assert_streamable_http_safe()
+def test_bearer_passthrough_forbids_shared_backend_key() -> None:
+    settings = Settings.load(
+        environ={
+            "WHATSHOT_MCP_SERVER_AUTH_MODE": "bearer_passthrough",
+            "WHATSHOT_MCP_BACKEND_API_KEY": "shared-backend-key",
+        }
+    )
+    with pytest.raises(ValueError, match="forbids a static Backend key"):
+        settings.assert_streamable_http_safe()
 
+
+def test_removed_static_token_mode_and_oauth_fail_closed() -> None:
+    with pytest.raises(ValidationError):
+        Settings.load(environ={"WHATSHOT_MCP_SERVER_AUTH_MODE": "static_token"})
     oauth = Settings.load(environ={"WHATSHOT_MCP_SERVER_AUTH_MODE": "oauth"})
     with pytest.raises(ValueError, match="not implemented"):
         oauth.assert_streamable_http_safe()
