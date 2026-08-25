@@ -68,8 +68,11 @@ and sends the same key to the Cloud Backend Contract as a Bearer credential.
 The Cloud Backend remains authoritative for key status, expiry, scopes,
 resources, rate limits, and usage attribution. Concurrent requests do not share
 credentials, and the key is never exposed as a tool argument, result, or log
-field. Supabase login JWTs and the removed shared MCP token format are rejected
-by the hosted MCP boundary.
+field. Standard hosted accounts currently share 50 calls per day across all of
+their API keys and remote MCP calls; the quota resets at 00:00 Asia/Shanghai.
+When exhausted, the Backend returns `DAILY_QUOTA_EXCEEDED` with `Retry-After`
+and `resetsAt`. Supabase login JWTs and the removed shared MCP token format are
+rejected by the hosted MCP boundary.
 
 For loopback development and operational `backend check`, a static Backend key
 may still be stored in an uncommitted local configuration or resolved from
