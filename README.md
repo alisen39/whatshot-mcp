@@ -149,6 +149,16 @@ limits evidence returned. Responses always report `analysisComplete`,
 approximate when the scan budget stops pagination. Analysis does not create or
 update a research run.
 
+Keyword matching: a word matches when an item's title or description contains
+it — Chinese by characters, other scripts by whole words (`GPT` matches
+`ChatGPT`, `AI` does not match `said`). The Cloud Backend answers
+`history/search` from its search index: one evidence record per hot-list item
+per day (`observedAt`/`firstSeenAt` = first listing that day, `lastSeenAt` =
+last listing, `rank` = best rank, `captureId` = null) and one per newsflash,
+for the last 90 days; `coverage.limitations` states this. Since 0.4.0 the hot
+event analysis takes its last-seen time from `lastSeenAt`. Use
+`whatshot_get_trend_series` for every capture of one item.
+
 At startup the MCP validates and freezes one deployment-level capabilities
 snapshot. It registers only tools whose required Backend capability is enabled;
 changing Backend features requires restarting the MCP. User permissions never

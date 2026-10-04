@@ -46,12 +46,13 @@ async def analyze_hot_event(
     items = sorted(scan.items, key=_event_time)
     incomplete = not scan.analysis_complete
     times = [_event_time(item) for item in items]
+    last_times = [_last_time(item) for item in items]
     ranks = [item.rank for item in items if item.rank is not None]
     hot_values = [
         value for item in items if (value := _numeric_hot(item.hot)) is not None
     ]
     first_seen = min(times) if times else None
-    last_seen = max(times) if times else None
+    last_seen = max(last_times) if last_times else None
 
     summary = HotEventSummary(
         keyword=query.keyword,
@@ -263,6 +264,11 @@ def _select_hot_evidence(items: list[Evidence], limit: int) -> list[Evidence]:
 
 def _event_time(item: Evidence) -> datetime:
     return item.first_seen_at or item.observed_at
+
+
+def _last_time(item: Evidence) -> datetime:
+    """Item-day evidence spans first to last listing; per-capture evidence is a point."""
+    return max(item.last_seen_at or item.observed_at, _event_time(item))
 
 
 def _topic_key(item: Evidence) -> str:

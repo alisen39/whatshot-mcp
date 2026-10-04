@@ -100,7 +100,13 @@ _UNSORTED_TOOL_SPECS: tuple[ToolSpec, ...] = (
         output_model=HistoryPageData,
         required_scopes=_DATA_READ,
         read_only=True,
-        description="Search historical evidence with opaque cursor pagination.",
+        description=(
+            "Search historical evidence with opaque cursor pagination. A word matches "
+            "when the title or description contains it (Chinese by characters, other "
+            "scripts by whole words). Backends may return one record per hot-list item "
+            "per day with firstSeenAt/lastSeenAt and limit the searchable window; see "
+            "coverage.limitations. Use whatshot_get_trend_series for every capture."
+        ),
     ),
     ToolSpec(
         name="whatshot_get_trend_series",
@@ -130,7 +136,10 @@ _UNSORTED_TOOL_SPECS: tuple[ToolSpec, ...] = (
         output_model=HotEventAnalysisData,
         required_scopes=_DATA_READ,
         read_only=True,
-        description="Analyze a hot-event lifecycle over bounded historical evidence.",
+        description=(
+            "Analyze a hot-event lifecycle over bounded historical evidence. "
+            "sampleCount counts evidence records, which may be item-days."
+        ),
     ),
     ToolSpec(
         name="whatshot_analyze_newsflash_coverage",

@@ -231,3 +231,47 @@ def test_analysis_schema_requires_completeness_and_approximation_fields() -> Non
         "lastSeenApproximate",
         "durationApproximate",
     } <= set(summary["required"])
+
+
+def test_hot_event_uses_last_listing_of_item_day_evidence() -> None:
+    first = NOW
+    last = NOW + timedelta(hours=11)
+    item_day = Evidence.model_validate(
+        {
+            "kind": "hotlist",
+            "site": "weibo",
+            "boardKey": "default",
+            "evidenceId": "hotlist-day:1:2026-08-13:abc",
+            "itemId": "abc",
+            "captureId": None,
+            "title": "ACME 发布",
+            "rank": 2,
+            "hot": 300,
+            "observedAt": first,
+            "firstSeenAt": first,
+            "lastSeenAt": last,
+        }
+    )
+    backend = PagedBackend(
+        [
+            HistoryPageData(
+                items=[item_day],
+                next_cursor=None,
+                truncated=False,
+                as_of=NOW,
+                coverage=_coverage(),
+            )
+        ]
+    )
+
+    result = asyncio.run(
+        analyze_hot_event(
+            backend,  # type: ignore[arg-type]
+            HotEventAnalysisQuery(keyword="ACME", scan_budget=10, evidence_limit=2),
+        )
+    )
+
+    assert result.summary.first_seen_at == first
+    assert result.summary.last_seen_at == last
+    assert result.summary.duration_hours == 11
+    assert result.summary.sample_count == 1
