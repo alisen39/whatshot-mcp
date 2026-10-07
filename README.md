@@ -159,7 +159,9 @@ it — Chinese by characters, other scripts by whole words (`GPT` matches
 per day (`observedAt`/`firstSeenAt` = first listing that day, `lastSeenAt` =
 last listing, `rank` = best rank, `captureId` = null) and one per newsflash,
 for the last 90 days; `coverage.limitations` states this. Since 0.4.0 the hot
-event analysis takes its last-seen time from `lastSeenAt`. Use
+event analysis takes its last-seen time from `lastSeenAt`. Since 0.4.1 the
+analysis tools page through history with the Backend's
+`limits.maxResultItems`, so a Backend capped below 200 no longer fails. Use
 `whatshot_get_trend_series` for every capture of one item.
 
 At startup the MCP validates and freezes one deployment-level capabilities

@@ -10,6 +10,7 @@ from whatshot_mcp.analysis import (
     analyze_newsflash_coverage,
 )
 from whatshot_mcp.contracts.v1 import (
+    BackendCapabilities,
     Coverage,
     Evidence,
     HistoryPageData,
@@ -59,9 +60,28 @@ def _evidence(
 
 
 class PagedBackend:
-    def __init__(self, pages: list[HistoryPageData]) -> None:
+    def __init__(
+        self, pages: list[HistoryPageData], *, max_result_items: int = 200
+    ) -> None:
         self.pages = pages
         self.queries = []
+        self.capabilities = BackendCapabilities.model_validate(
+            {
+                "backend": {"name": "stub", "version": "1"},
+                "boardKeyVersion": 1,
+                "profiles": ["core-read"],
+                "features": {
+                    "sources": True,
+                    "sourceSchema": True,
+                    "current": True,
+                    "kinds": ["hotlist", "newsflash"],
+                },
+                "limits": {"maxResultItems": max_result_items},
+            }
+        )
+
+    async def get_capabilities(self):  # noqa: ANN201
+        return self.capabilities
 
     async def search_history(self, query):  # noqa: ANN001, ANN201
         self.queries.append(query)
@@ -135,6 +155,39 @@ def test_scan_budget_marks_lifecycle_approximate_and_preserves_coverage() -> Non
     assert result.coverage.complete is False
     assert result.coverage.limitations == ["retention-window"]
     assert backend.queries[0].limit == 2
+
+
+def test_scan_page_size_respects_backend_max_result_items() -> None:
+    backend = PagedBackend(
+        [
+            HistoryPageData(
+                items=[_evidence(index) for index in range(100)],
+                next_cursor="page-2",
+                truncated=True,
+                as_of=NOW,
+                coverage=_coverage(),
+            ),
+            HistoryPageData(
+                items=[_evidence(index) for index in range(100, 150)],
+                next_cursor=None,
+                truncated=False,
+                as_of=NOW,
+                coverage=_coverage(),
+            ),
+        ],
+        max_result_items=100,
+    )
+
+    result = asyncio.run(
+        analyze_hot_event(
+            backend,  # type: ignore[arg-type]
+            HotEventAnalysisQuery(keyword="ACME", scan_budget=300, evidence_limit=5),
+        )
+    )
+
+    assert [query.limit for query in backend.queries] == [100, 100]
+    assert result.scanned_count == 150
+    assert result.analysis_complete is True
 
 
 def test_newsflash_coverage_groups_events_across_pages() -> None:

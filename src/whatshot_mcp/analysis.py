@@ -143,6 +143,8 @@ async def _scan_history(
     cursor: str | None = None
     seen_cursors: set[str] = set()
     analysis_complete = False
+    capabilities = await backend.get_capabilities()
+    page_limit = capabilities.limits.max_result_items
 
     while len(items) < query.scan_budget:
         remaining = query.scan_budget - len(items)
@@ -154,7 +156,7 @@ async def _scan_history(
                 kind=kind,
                 since=query.since,
                 until=query.until,
-                limit=min(200, remaining),
+                limit=min(page_limit, remaining),
                 cursor=cursor,
             )
         )
