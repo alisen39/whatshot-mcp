@@ -291,7 +291,25 @@ def test_invalid_or_unreachable_backend_is_sanitized() -> None:
             == "UPSTREAM_UNAVAILABLE: WhatsHot Backend is unavailable."
         )
 
+    async def timed_out() -> None:
+        def handler(request: httpx.Request) -> httpx.Response:
+            raise httpx.ReadTimeout("contains must-not-leak", request=request)
+
+        async with BackendClient(
+            "http://127.0.0.1:6690/api/v1",
+            api_key="must-not-leak",
+            transport=httpx.MockTransport(handler),
+        ) as client:
+            with pytest.raises(BackendTransportError) as raised:
+                await client.get_capabilities()
+        assert raised.value.retryable is True
+        assert str(raised.value).startswith(
+            "UPSTREAM_UNAVAILABLE: WhatsHot Backend did not respond in time"
+        )
+        assert "must-not-leak" not in str(raised.value)
+
     asyncio.run(malformed())
+    asyncio.run(timed_out())
     asyncio.run(unreachable())
 
 

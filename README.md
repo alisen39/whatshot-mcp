@@ -170,6 +170,11 @@ changing Backend features requires restarting the MCP. User permissions never
 change `tools/list`: they are enforced by the Backend on each call, so every
 user of one deployment sees the same publicly cacheable catalog.
 
+A failed tool call returns `isError=true` with the Backend's stable error code
+and message, e.g. `UNKNOWN_SOURCE: Unknown source: ...` or
+`UPSTREAM_UNAVAILABLE: WhatsHot Backend is unavailable.` Before 0.4.2, MCP SDK
+2.3 and later hid that text behind a bare `Error executing tool <name>`.
+
 ## Contract v1
 
 The source of truth is the Pydantic model package at

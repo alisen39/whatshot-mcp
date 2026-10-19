@@ -182,10 +182,11 @@ def _tool_boundary(function: Callable[..., Coroutine[Any, Any, Any]]):  # noqa: 
         try:
             return await function(*args, **kwargs)
         except BackendClientError as exc:
-            # MCPServer converts ordinary handler failures into a tool-level
-            # isError result. BackendClientError has already removed transport
-            # details and secrets, so only the stable code/message cross here.
-            raise RuntimeError(str(exc)) from None
+            # Since MCP SDK 2.3 only ToolError text reaches the client; any other
+            # exception becomes a bare "Error executing tool <name>". The error
+            # has already removed transport details and secrets, so only the
+            # stable code/message cross here.
+            raise ToolError(str(exc)) from None
 
     return guarded
 

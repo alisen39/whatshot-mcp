@@ -264,7 +264,12 @@ class BackendClient:
                 json=json_body,
                 headers=headers,
             )
-        except (httpx.TimeoutException, httpx.RequestError) as exc:
+        except httpx.TimeoutException as exc:
+            raise BackendTransportError(
+                "WhatsHot Backend did not respond in time; narrow site, boardKey "
+                "or the time window and retry."
+            ) from exc
+        except httpx.RequestError as exc:
             raise BackendTransportError() from exc
 
         try:
