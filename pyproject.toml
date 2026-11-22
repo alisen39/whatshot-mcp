@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "whatshot-mcp"
-version = "0.4.2"
+version = "0.4.3"
 description = "Open MCP server and backend contract models for WhatsHot"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -27,7 +27,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/alisen39/whatshot-mcp"
+Homepage = "https://whatshot.top/"
+Documentation = "https://whatshot.top/developers"
 Repository = "https://github.com/alisen39/whatshot-mcp"
 Issues = "https://github.com/alisen39/whatshot-mcp/issues"
 

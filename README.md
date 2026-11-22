@@ -4,6 +4,11 @@
 to either a local WhatsHot Backend or the hosted WhatsHot Backend through the
 same versioned HTTP contract.
 
+The data comes from [WhatsHot](https://whatshot.top/), a site that puts trending
+lists, newsflashes and gold prices from 400+ websites in one place. The
+[developer page](https://whatshot.top/developers) shows how to get an API key
+and connect an AI client to the hosted server.
+
 This repository contains the Contract v1 models and the MCP implementation.
 The MCP server only talks to a versioned WhatsHot Backend over
 HTTP; it never opens DuckDB or PostgreSQL itself.
